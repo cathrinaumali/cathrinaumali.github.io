@@ -1,0 +1,19 @@
+.room-details {
+  margin-bottom: 60px;
+  background: #d3d3d324;
+  padding: 40px 30px;
+  border-radius: 10px;
+
+  h3 {
+    text-transform: uppercase;
+    font-family: "Poppins", sans-serif;
+    color: #1976d2;
+    margin-top: 0;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+}

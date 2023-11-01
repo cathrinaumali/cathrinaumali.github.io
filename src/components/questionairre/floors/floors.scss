@@ -1,0 +1,11 @@
+.floors-container {
+  &__rooms {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    h4 {
+      margin-bottom: 0;
+    }
+  }
+}

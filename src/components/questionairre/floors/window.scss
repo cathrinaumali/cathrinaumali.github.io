@@ -1,0 +1,14 @@
+.window-specifics {
+  padding-left: 40px;
+  h4 {
+    color: #08253c;
+    text-transform: uppercase;
+    font-family: "Poppins", sans-serif;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+}
