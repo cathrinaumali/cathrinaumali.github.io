@@ -5,7 +5,12 @@ import InputField from "../ui/inputField";
 import "./houseSize.scss";
 
 const HouseSize = () => {
-  const { setAnswerData } = useContext(QuestionaireContext);
+  const {
+    setAnswerData,
+    answerData: {
+      size: { width, length },
+    },
+  } = useContext(QuestionaireContext);
 
   return (
     <div className="house-size">
@@ -13,6 +18,7 @@ const HouseSize = () => {
       <div className="house-size__fields">
         <InputField
           label="Width in meters?"
+          value={width}
           showPlaceholderLabel
           onChange={(event: SelectChangeEvent) => {
             setAnswerData((prev) => ({
@@ -27,6 +33,7 @@ const HouseSize = () => {
         />
         <InputField
           label="Length in meters?"
+          value={length}
           showPlaceholderLabel
           onChange={(event: SelectChangeEvent) => {
             setAnswerData((prev) => ({

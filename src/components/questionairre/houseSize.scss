@@ -1,4 +1,8 @@
 .house-size {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
   &__fields {
     display: flex;
     gap: 24px;

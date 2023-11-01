@@ -37,11 +37,13 @@ export const addRoomsToFloor = (floors, floorId, roomCount) => {
     size: null,
     floorType: null,
     windows: [
-      {
-        name: null,
-        style: null,
-        glassType: null,
-      },
+      //   {
+      //     name: null,
+      //     type: null,
+      //     customType: null,
+      //     style: null,
+      //     glassType: null,
+      //   },
     ],
   });
 
@@ -75,34 +77,7 @@ export const updateRoomProperties = (floors, roomId, updates) => {
   return updatedFloors;
 };
 
-// export const addWindowsToRoom = (rooms, roomId, numberOfWindows) => {
-//   const updatedRooms = [...rooms];
-//   const roomIndex = updatedRooms.findIndex((room) => room.id === roomId);
-
-//   if (roomIndex !== -1) {
-//     const createWindow = (id) => ({
-//       id,
-//       name: null,
-//       style: null,
-//       glassType: null,
-//     });
-
-//     const targetRoom = updatedRooms[roomIndex];
-//     const newWindows = Array.from(
-//       { length: numberOfWindows },
-//       (_, windowIndex) =>
-//         createWindow(targetRoom.windows.length + windowIndex + 1)
-//     );
-
-//     targetRoom.windows.push(...newWindows);
-//     updatedRooms[roomIndex] = targetRoom;
-//   }
-
-//   return updatedRooms;
-// };
-
 export const addWindowsToRoom = (floors, roomId, numberOfWindows) => {
-  // Make a deep copy of the floors to avoid modifying the original data
   const updatedFloors = JSON.parse(JSON.stringify(floors));
 
   // Find the floor and room with the specified roomId
@@ -115,6 +90,8 @@ export const addWindowsToRoom = (floors, roomId, numberOfWindows) => {
     const createWindow = (id) => ({
       id,
       name: `Window ${id}`,
+      type: null,
+      customType: null,
       style: null,
       glassType: null,
     });
@@ -126,7 +103,6 @@ export const addWindowsToRoom = (floors, roomId, numberOfWindows) => {
         createWindow(roomToUpdate.windows.length + windowIndex + 1)
     );
 
-    // Add the new windows to the room
     roomToUpdate.windows.push(...newWindows);
   }
 

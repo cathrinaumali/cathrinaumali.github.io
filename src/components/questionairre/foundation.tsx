@@ -2,21 +2,20 @@ import React, { useState, useContext } from "react";
 import CustomSelect from "../ui/customSelect";
 import QuestionaireContext from "../context/questionaireContext";
 
+import { foundationOptions } from "../../utils/constants.ts";
+
 const Foundation = () => {
-  const [foundation, setFoundation] = useState("");
-  const { answerData, setAnswerData } = useContext(QuestionaireContext);
+  const {
+    answerData: { foundation: houseFoundation },
+    setAnswerData,
+  } = useContext(QuestionaireContext);
+
+  const [foundation, setFoundation] = useState(houseFoundation);
 
   const handleChange = (event: SelectChangeEvent) => {
     setFoundation(event.target.value as string);
     setAnswerData((prev) => ({ ...prev, foundation: event.target.value }));
   };
-  console.log(answerData);
-
-  const foundationOptions = [
-    { value: "brick", label: "Brick" },
-    { value: "slab", label: "Slab" },
-    { value: "reinforced-concrete", label: "Reinforced concrete" },
-  ];
 
   return (
     <CustomSelect

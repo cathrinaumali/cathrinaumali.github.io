@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import FormControl from "@mui/material/FormControl";
 import { SelectChangeEvent } from "@mui/material/Select";
 
@@ -7,41 +7,29 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 
+import QuestionaireContext from "../../context/questionaireContext";
+
 import InputField from "../../ui/inputField";
 import CustomSelect from "../../ui/customSelect";
+
+import {
+  windowTypes,
+  windowStyles,
+  glassTypes,
+} from "../../../utils/constants.ts";
+
 import "./window.scss";
 
 const Window = ({ data }) => {
+  const {
+    answerData: { floors },
+  } = useContext(QuestionaireContext);
+
   const [roomType, setRoomType] = useState("");
 
   const handleChange = (event: SelectChangeEvent) => {
     setRoomType(event.target.value as string);
   };
-
-  const windowTypes = [
-    { value: "casement", label: "Casement" },
-    { value: "double-hung", label: "Double-Hung" },
-    { value: "awning", label: "Awning" },
-    { value: "sliding", label: "Sliding" },
-    { value: "bay", label: "Bay" },
-    { value: "bow", label: "Bow" },
-    { value: "picture", label: "Picture" },
-    { value: "skylight", label: "Skylight" },
-    { value: "frosted", label: "Frosted" },
-    { value: "stained-glass", label: "Stained Glass" },
-  ];
-
-  const windowStyles = [
-    { value: "bay", label: "Bay" },
-    { value: "flat", label: "Flat" },
-    { value: "full-height", label: "Full Height" },
-  ];
-
-  const glassTypes = [
-    { value: "tempered", label: "Tempered" },
-    { value: "triple-glazed", label: "Triple Glazed" },
-    { value: "double-glazed", label: "Double Glazed" },
-  ];
 
   return (
     <div className="window-specifics">
@@ -63,13 +51,21 @@ const Window = ({ data }) => {
                 control={<Radio />}
                 label="Add new"
               />
-              <InputField name="size" onChange={handleChange} />
+              <InputField
+                name="customType"
+                value={data?.customType}
+                onChange={handleChange}
+              />
               <FormControlLabel
                 value="other"
                 control={<Radio />}
                 label="Select from the list"
               />
-              <CustomSelect options={windowTypes} />
+              <CustomSelect
+                name="type"
+                value={data?.type}
+                options={windowTypes}
+              />
             </RadioGroup>
           </FormControl>
         </div>

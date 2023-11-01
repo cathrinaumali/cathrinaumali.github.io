@@ -5,11 +5,11 @@ import { addFloorsWithRooms, addRoomsToFloor } from "../../../utils/helpers.ts";
 import "./floors.scss";
 
 const Floors = () => {
-  const [floorCount, setFloorCount] = useState(0);
   const {
     answerData: { floors: floorsArray },
     setAnswerData,
   } = useContext(QuestionaireContext);
+  const [floorCount, setFloorCount] = useState(floorsArray?.length);
 
   const handleFloorCountChange = (event) => {
     const newCount = event.target.value;
@@ -22,7 +22,7 @@ const Floors = () => {
   return (
     <div className="floors-container">
       <InputField
-        label="How many floors?"
+        label="How many floors you'd prefer?"
         value={floorCount}
         onChange={handleFloorCountChange}
         id="floor-count"
@@ -30,12 +30,13 @@ const Floors = () => {
 
       {floorsArray?.length > 0 && (
         <div className="floors-container__rooms">
-          <h4 htmlFor="">No of rooms for each floor</h4>
+          <h4 htmlFor="">How many rooms you'd like on each floor</h4>
           {floorsArray.map((item) => {
             return (
               <div className="floors-container__rooms-item" key={item.id}>
                 <InputField
                   label={item.name}
+                  value={item?.rooms?.length}
                   onChange={(e) => {
                     const updatedData = addRoomsToFloor(
                       floorsArray,

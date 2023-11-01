@@ -19,7 +19,11 @@ type Step = {
 console.log(jsonFilePath);
 
 const QuestionaireProvider = ({ children }) => {
-  const [answerData, setAnswerData] = useState(houseDetailsData);
+  const storedAnswerData = JSON.parse(localStorage.getItem("answerData"));
+
+  const [answerData, setAnswerData] = useState(
+    storedAnswerData || houseDetailsData
+  );
   const [currentStep, setCurrentStep] = useState<number>(0);
 
   const steps: Step[] = [
@@ -56,6 +60,13 @@ const QuestionaireProvider = ({ children }) => {
   const prevStep = () => {
     setCurrentStep((prevStep) => (prevStep - 1 + steps.length) % steps.length);
   };
+
+  useEffect(() => {
+    const answerDataString = JSON.stringify(answerData);
+    if (storedAnswerData !== answerDataString) {
+      localStorage.setItem("answerData", answerDataString);
+    }
+  }, [answerData, storedAnswerData]);
 
   return (
     <QuestionaireContext.Provider

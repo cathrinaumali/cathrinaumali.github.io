@@ -14,8 +14,6 @@ const Questionairre: React.FC<QuestionairreProps> = () => {
   const { answerData, nextStep, prevStep, steps, currentStep } =
     useContext(QuestionaireContext);
 
-  console.log(answerData);
-
   return (
     <>
       <Box sx={{ flexGrow: 1 }} className="questionaire">
@@ -60,36 +58,3 @@ const Questionairre: React.FC<QuestionairreProps> = () => {
 };
 
 export default Questionairre;
-
-// type Step = {
-//     id: number;
-//     content: ReactNode;
-//   };
-//   const [currentStep, setCurrentStep] = useState<number>(0);
-
-//   const steps: Step[] = [
-//     {
-//       id: 1,
-//       content: <Foundation />,
-//     },
-//     {
-//       id: 2,
-//       content: <HouseSize />,
-//     },
-//     {
-//       id: 3,
-//       content: <NumberOfFloors />,
-//     },
-//     {
-//       id: 4,
-//       content: <FloorSpecifics />,
-//     },
-//   ];
-
-//   const nextStep = () => {
-//     setCurrentStep((prevStep) => (prevStep + 1) % steps.length);
-//   };
-
-//   const prevStep = () => {
-//     setCurrentStep((prevStep) => (prevStep - 1 + steps.length) % steps.length);
-//   };

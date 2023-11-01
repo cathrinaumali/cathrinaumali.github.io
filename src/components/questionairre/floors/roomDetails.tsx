@@ -5,34 +5,23 @@ import CustomSelect from "../../ui/customSelect";
 import Window from "./window";
 
 import QuestionaireContext from "../../context/questionaireContext";
+
 import {
   updateRoomProperties,
   addWindowsToRoom,
 } from "../../../utils/helpers.ts";
+import { roomTypes, floorTypes } from "../../../utils/constants.ts";
 import "./roomDetails.scss";
 
 const RoomDetails = ({ data }) => {
-  const [roomType, setRoomType] = useState("");
-  const [floorType, setFloorType] = useState("");
-
   const {
     answerData: { floors },
     setAnswerData,
   } = useContext(QuestionaireContext);
 
-  const roomTypes = [
-    { value: "bedroom", label: "Bedroom" },
-    { value: "lounge", label: "Lounge" },
-    { value: "diner", label: "Diner" },
-    { value: "kitchen", label: "Kitchen" },
-    { value: "bathroom", label: "Bathroom" },
-    { value: "office", label: "Office" },
-  ];
+  const [roomType, setRoomType] = useState(data?.roomType || "");
+  const [floorType, setFloorType] = useState(data?.floorType || "");
 
-  const floorTypes = [
-    { value: "wood", label: "Wood" },
-    { value: "carpet", label: "Carpet" },
-  ];
   const handleChange = (event) => {
     const newData = updateRoomProperties(floors, data.id, {
       [event.target.name]: event.target.value,
@@ -46,6 +35,7 @@ const RoomDetails = ({ data }) => {
       <div className="room-details__details">
         <InputField
           label="Size of room in sqm"
+          value={data?.size}
           showPlaceholderLabel
           name="size"
           onChange={handleChange}
@@ -75,6 +65,7 @@ const RoomDetails = ({ data }) => {
 
         <InputField
           label="No. of windows"
+          value={data?.windows?.length}
           showPlaceholderLabel
           name="windows"
           onChange={(e) => {
