@@ -3,8 +3,8 @@ import CustomSelect from "../ui/customSelect";
 import QuestionaireContext from "../context/questionaireContext";
 
 const RoofType = () => {
-  const [selectedRoof, setSelectedRoof] = useState("");
   const { answerData, setAnswerData } = useContext(QuestionaireContext);
+  const [selectedRoof, setSelectedRoof] = useState(answerData?.roofType || "");
 
   const handleChange = (event: SelectChangeEvent) => {
     setSelectedRoof(event.target.value as string);

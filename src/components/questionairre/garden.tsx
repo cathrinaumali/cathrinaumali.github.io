@@ -5,12 +5,17 @@ import QuestionaireContext from "../context/questionaireContext";
 import { gardenTypes } from "../../utils/constants.ts";
 
 const Garden = () => {
-  const [selectedGarden, setSelectedGarden] = useState("");
   const { answerData, setAnswerData } = useContext(QuestionaireContext);
+  const [selectedGarden, setSelectedGarden] = useState(
+    answerData?.garden?.type || ""
+  );
 
   const handleChange = (event: SelectChangeEvent) => {
     setSelectedGarden(event.target.value as string);
-    setAnswerData((prev) => ({ ...prev, garden: event.target.value }));
+    setAnswerData((prev) => ({
+      ...prev,
+      garden: { ...prev.garden, type: event.target.value },
+    }));
   };
 
   return (
