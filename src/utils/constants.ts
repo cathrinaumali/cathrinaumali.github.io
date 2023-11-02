@@ -1,5 +1,58 @@
 import { HouseDetailsData } from "./types";
 
+// {
+//     "foundation": "brick",
+//     "size": {
+//       "width": "1",
+//       "length": "1"
+//     },
+//     "floors": [
+//       {
+//         "id": 1,
+//         "name": "Floor 1",
+//         "count": null,
+//         "rooms": [
+//           {
+//             "id": 1,
+//             "name": "Room 1",
+//             "size": "24",
+//             "floorType": "wood",
+//             "windows": [
+//               {
+//                 "id": 3,
+//                 "name": "Window 3",
+//                 "type": null,
+//                 "customType": null,
+//                 "style": null,
+//                 "glassType": null
+//               }
+//             ],
+//             "roomType": "lounge"
+//           }
+//         ]
+//       },
+//       {
+//         "id": 2,
+//         "name": "Floor 2",
+//         "count": null,
+//         "rooms": [
+//           {
+//             "id": 1,
+//             "name": "Room 1",
+//             "size": "24",
+//             "floorType": "wood",
+//             "windows": [],
+//             "roomType": "lounge"
+//           }
+//         ]
+//       }
+//     ],
+//     "roofType": null,
+//     "garden": {
+//       "type": null,
+//       "plants": null
+//     }
+//   }
 export const houseDetailsData: HouseDetailsData = {
   foundation: null,
   size: {

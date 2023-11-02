@@ -17,23 +17,54 @@ import {
   windowStyles,
   glassTypes,
 } from "../../../utils/constants.ts";
+import { updateWindowProperties } from "../../../utils/helpers.ts";
 
 import "./window.scss";
 
-const Window = ({ data }) => {
+const RADIO_ONE: string = "add-new";
+const RADIO_TWO: string = "select";
+
+const Window = ({ windowData, roomId }) => {
   const {
     answerData: { floors },
+    setAnswerData,
   } = useContext(QuestionaireContext);
+  console.log(windowData);
+  const [windowType, setWindowType] = useState(windowData?.type || "");
+  const [selectedRadio, setSelectedRadio] = useState(
+    windowData.selectedRadio || RADIO_ONE
+  );
+  const [windowStyle, setWindowStyle] = useState(windowData.style);
+  const [glassType, setGlassType] = useState(windowData.glassType);
 
-  const [roomType, setRoomType] = useState("");
+  const updateWindowData = (updates) => {
+    const newData = updateWindowProperties(
+      floors,
+      roomId,
+      windowData.id,
+      updates
+    );
+    setAnswerData((prev) => ({ ...prev, floors: newData }));
+  };
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setRoomType(event.target.value as string);
+  const onWindowTypeChange = (event: SelectChangeEvent) => {
+    setWindowType(event.target.value as string);
+    updateWindowData({ type: event.target.value });
+  };
+
+  const onInputTypeSelect = (e) => {
+    setSelectedRadio(e.target.value);
+    updateWindowData({ selectedRadio: e.target.value });
+  };
+
+  const onSelectChange = (event) => {
+    const updates = { [event.target.name]: event.target.value };
+    updateWindowData(updates);
   };
 
   return (
     <div className="window-specifics">
-      <h4>{data.name}</h4>
+      <h4>{windowData.name}</h4>
       <div className="window-specifics__details">
         <div className="window-specifics__window-type">
           <FormControl>
@@ -43,37 +74,58 @@ const Window = ({ data }) => {
 
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="add-new"
+              defaultValue={selectedRadio}
               name="radio-buttons-group"
             >
               <FormControlLabel
-                value="add-new"
+                value={RADIO_ONE}
                 control={<Radio />}
                 label="Add new"
+                onChange={onInputTypeSelect}
               />
               <InputField
-                name="customType"
-                value={data?.customType}
-                onChange={handleChange}
+                name="windowType"
+                disabled={selectedRadio !== RADIO_ONE}
+                variant={selectedRadio !== RADIO_ONE ? "filled" : "outlined"}
+                value={windowType}
+                onChange={onWindowTypeChange}
               />
               <FormControlLabel
-                value="other"
+                value={RADIO_TWO}
                 control={<Radio />}
                 label="Select from the list"
+                onChange={onInputTypeSelect}
               />
               <CustomSelect
-                name="type"
-                value={data?.type}
+                name="windowType"
+                value={windowType}
+                disabled={selectedRadio !== RADIO_TWO}
+                variant={selectedRadio !== RADIO_TWO ? "filled" : "outlined"}
                 options={windowTypes}
+                onChange={onWindowTypeChange}
               />
             </RadioGroup>
           </FormControl>
         </div>
-        <CustomSelect label="Style" name="style" options={windowStyles} />
+        <CustomSelect
+          label="Style"
+          name="style"
+          value={windowStyle}
+          options={windowStyles}
+          onChange={(e) => {
+            onSelectChange(e);
+            setWindowStyle(e.target.value);
+          }}
+        />
         <CustomSelect
           label="Glass Type"
-          name="glass-type"
+          name="glassType"
+          value={glassType}
           options={glassTypes}
+          onChange={(e) => {
+            onSelectChange(e);
+            setGlassType(e.target.value);
+          }}
         />
       </div>
     </div>

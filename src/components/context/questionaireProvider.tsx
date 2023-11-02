@@ -63,6 +63,9 @@ const QuestionaireProvider = ({ children }) => {
 
   useEffect(() => {
     const answerDataString = JSON.stringify(answerData);
+    const storedAnswerData = localStorage.getItem("answerData");
+    console.log(answerData, JSON.parse(localStorage.getItem("answerData")));
+
     if (storedAnswerData !== answerDataString) {
       localStorage.setItem("answerData", answerDataString);
     }

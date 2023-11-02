@@ -21,6 +21,7 @@ const RoomDetails = ({ data }) => {
 
   const [roomType, setRoomType] = useState(data?.roomType || "");
   const [floorType, setFloorType] = useState(data?.floorType || "");
+  const [windowCount, setWindowCount] = useState(data?.windows?.length);
 
   const handleChange = (event) => {
     const newData = updateRoomProperties(floors, data.id, {
@@ -65,17 +66,20 @@ const RoomDetails = ({ data }) => {
 
         <InputField
           label="No. of windows"
-          value={data?.windows?.length}
+          value={windowCount}
           showPlaceholderLabel
           name="windows"
           onChange={(e) => {
             const newData = addWindowsToRoom(floors, data.id, e.target.value);
             setAnswerData((prev) => ({ ...prev, floors: newData }));
+            setWindowCount(e.target.value);
           }}
         />
       </div>
       {data.windows?.length > 0 &&
-        data.windows.map((window) => <Window data={window} />)}
+        data.windows.map((window) => (
+          <Window key={data.id} roomId={data.id} windowData={window} />
+        ))}
     </div>
   );
 };

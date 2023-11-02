@@ -3,11 +3,12 @@ import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
 
 const InputField = ({
-  label,
+  id,
   name,
+  label,
   value,
   onChange,
-  id,
+  disabled,
   variant = "outlined",
   showPlaceholderLabel = false,
 }) => {
@@ -19,6 +20,7 @@ const InputField = ({
       <TextField
         id={id}
         name={name}
+        disabled={disabled}
         label={showPlaceholderLabel && label ? label : null} // If showLabel is true, TextField label is empty
         variant={variant}
         value={value}

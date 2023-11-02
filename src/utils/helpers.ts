@@ -36,15 +36,7 @@ export const addRoomsToFloor = (floors, floorId, roomCount) => {
     name: `Room ${id}`,
     size: null,
     floorType: null,
-    windows: [
-      //   {
-      //     name: null,
-      //     type: null,
-      //     customType: null,
-      //     style: null,
-      //     glassType: null,
-      //   },
-    ],
+    windows: [],
   });
 
   const targetFloor = floorArray[floorId - 1];
@@ -94,16 +86,38 @@ export const addWindowsToRoom = (floors, roomId, numberOfWindows) => {
       customType: null,
       style: null,
       glassType: null,
+      selectedRadio: "add-new",
     });
-
     // Create an array of new windows
     const newWindows = Array.from(
       { length: numberOfWindows },
       (_, windowIndex) =>
         createWindow(roomToUpdate.windows.length + windowIndex + 1)
     );
+    roomToUpdate.windows = newWindows;
+  }
 
-    roomToUpdate.windows.push(...newWindows);
+  return updatedFloors;
+};
+
+export const updateWindowProperties = (floors, roomId, windowId, updates) => {
+  const updatedFloors = JSON.parse(JSON.stringify(floors));
+  const roomToUpdate = updatedFloors
+    .flatMap((floor) => floor.rooms)
+    .find((room) => room.id === roomId);
+
+  if (roomToUpdate) {
+    const windowIndex = roomToUpdate.windows.findIndex(
+      (window) => window.id === windowId
+    );
+
+    if (windowIndex !== -1) {
+      // Replace the old window with the updated window
+      roomToUpdate.windows[windowIndex] = {
+        ...roomToUpdate.windows[windowIndex],
+        ...updates,
+      };
+    }
   }
 
   return updatedFloors;
