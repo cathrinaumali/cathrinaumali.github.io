@@ -16,9 +16,11 @@ type Step = {
   page: "foundation" | "size" | "floors" | "floorSpecs" | "roofType" | "garden";
   content: any;
   completed: booelan;
-  nextStepIsDisabled: booelan;
-  prevStateIsDisabled: booelan;
+  nextStepEnabled: booelan;
+  prevStateEnabled: booelan;
 };
+
+// console.log(jsonFilePath);
 
 const defaultSteps: Step[] = [
   {
@@ -26,48 +28,48 @@ const defaultSteps: Step[] = [
     page: "foundation",
     content: Foundation,
     completed: false,
-    nextStepIsDisabled: false,
-    prevStateIsDisabled: false,
+    nextStepEnabled: false,
+    prevStateEnabled: false,
   },
   {
     id: 2,
     page: "size",
     content: HouseSize,
     completed: false,
-    nextStepIsDisabled: false,
-    prevStateIsDisabled: false,
+    nextStepEnabled: false,
+    prevStateEnabled: false,
   },
   {
     id: 3,
     page: "floors",
     content: Floors,
     completed: false,
-    nextStepIsDisabled: false,
-    prevStateIsDisabled: false,
+    nextStepEnabled: false,
+    prevStateEnabled: false,
   },
   {
     id: 4,
     page: "floorSpecs",
     content: FloorSpecifics,
     completed: false,
-    nextStepIsDisabled: false,
-    prevStateIsDisabled: false,
+    nextStepEnabled: false,
+    prevStateEnabled: false,
   },
   {
     id: 5,
     page: "roofType",
     content: RoofType,
     completed: false,
-    nextStepIsDisabled: false,
-    prevStateIsDisabled: false,
+    nextStepEnabled: false,
+    prevStateEnabled: false,
   },
   {
     id: 6,
     page: "garden",
     content: Garden,
     completed: false,
-    nextStepIsDisabled: false,
-    prevStateIsDisabled: false,
+    nextStepEnabled: false,
+    prevStateEnabled: false,
   },
 ];
 
@@ -79,10 +81,10 @@ const QuestionaireProvider = ({ children }) => {
   );
   const [formSteps, setFormSteps] = useState<Step[]>(defaultSteps);
   const [currentStepData, setCurrentStepData] = useState<Step>(defaultSteps[0]);
-  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [currentStep, setCurrentStep] = useState<number>(0);
+  const [isDisabledNext, setIsDisabledNext] = useState<number>(true);
 
   const stringifiedAnswerData = JSON.stringify(answerData);
-  const findCurrentPage = (steps, id) => steps?.filter((step) => step.id == id);
 
   const hasValues = useCallback((obj: Step): boolean => {
     if (obj === undefined || obj === null) {
@@ -94,41 +96,39 @@ const QuestionaireProvider = ({ children }) => {
     }
 
     if (Array.isArray(obj)) {
-      return obj.every((item) => hasValues(item));
+      return obj.some((item) => hasValues(item));
     }
 
     if (typeof obj === "object") {
-      return Object.values(obj).every((value) => hasValues(value));
+      return Object.values(obj).some((value) => hasValues(value));
     }
 
-    return false; // Default to false for other cases
+    return true; // Default to true for other cases
   }, []);
 
   const nextStep = () => {
-    setCurrentStep((prevStep) => prevStep + 1);
+    setCurrentStep((prevStep) => (prevStep + 1) % formSteps.length);
   };
 
   const prevStep = () => {
-    setCurrentStep((prevStep) => prevStep - 1);
+    setCurrentStep(
+      (prevStep) => (prevStep - 1 + formSteps.length) % formSteps.length
+    );
   };
 
   const updateSteps = (prevSteps, updatedAnswerData) => {
     return prevSteps.map((step, index, steps) => {
-      let isCompleted = false;
-      if (step.page === "floors") {
-        isCompleted = updatedAnswerData[step.page]?.length > 0;
-      } else {
-        isCompleted = updatedAnswerData
-          ? hasValues(updatedAnswerData[step.page])
-          : false;
-      }
-
-      const nextStepIsDisabled = index < steps.length - 1 && isCompleted;
+      const isCompleted = updatedAnswerData
+        ? hasValues(updatedAnswerData[step.page])
+        : false;
+      const nextStepEnabled = index < steps.length - 1 && isCompleted;
+      const prevStateEnabled = index > 0 && steps[index - 1].completed;
 
       return {
         ...step,
         completed: isCompleted,
-        nextStepIsDisabled,
+        nextStepEnabled,
+        prevStateEnabled,
       };
     });
   };
@@ -146,11 +146,22 @@ const QuestionaireProvider = ({ children }) => {
   useEffect(() => {
     const storedAnswerData = JSON.parse(localStorage.getItem("answerData"));
     const updatedSteps = updateSteps(defaultSteps, storedAnswerData);
+    // defaultSteps.map((step, index, steps) => {
+    //   const isCompleted = storedAnswerData
+    //     ? hasValues(storedAnswerData[step.page])
+    //     : false;
+    //   const nextStepEnabled = index < steps.length - 1 && isCompleted;
+    //   const prevStateEnabled = index > 0 && steps[index - 1].completed;
 
+    //   return {
+    //     ...step,
+    //     completed: isCompleted,
+    //     nextStepEnabled,
+    //     prevStateEnabled,
+    //   };
+    // });
     // Find the first incomplete step after updating
     const firstIncompleteStep = updatedSteps.find((step) => !step.completed);
-    // console.log(updatedSteps);
-    // console.log(firstIncompleteStep);
 
     // Set the current step to the id of the first incomplete step
     if (firstIncompleteStep) {
@@ -161,34 +172,30 @@ const QuestionaireProvider = ({ children }) => {
 
     setFormSteps(updatedSteps);
   }, [hasValues]);
+  const findCurrentPage = (steps, id) => steps?.filter((step) => step.id == id);
 
   useEffect(() => {
+    // const storedAnswerData = JSON.parse(localStorage.getItem("answerData"));
+    // const updatedSteps = updateSteps(defaultSteps, storedAnswerData);
+    // console.log(answerData);
+    // console.log(currentStep);
+    // console.log(formSteps);
     const stepData = findCurrentPage(formSteps, currentStep);
     setCurrentStepData(stepData);
+
+    // const updated = formSteps.map((step) => {
+    //   if (step.id === currentStep) {
+    //     step.completed = true;
+    //   }
+    //   return step;
+    // });
+    // setFormSteps(updated);
   }, [currentStep, formSteps]);
 
   useEffect(() => {
-    const filtered = formSteps?.filter((step) => step.id === currentStep);
-    const updatedCurrentStep = filtered?.map((step) => {
-      if (step.id === currentStep) {
-        // const completed = hasValues(answerData[step.page]);
-        let completed = false;
-        if (step.page === "floors") {
-          //   console.log(step.page, answerData[step.page]);
-          completed = answerData[step.page]?.length > 0;
-        } else {
-          completed = answerData ? hasValues(answerData[step.page]) : false;
-        }
-        return {
-          ...step,
-          completed,
-          nextStepIsDisabled: !completed,
-        };
-      }
-      return step;
-    });
-    setCurrentStepData(updatedCurrentStep);
-  }, [answerData, currentStep, formSteps, hasValues, stringifiedAnswerData]);
+    console.log(stringifiedAnswerData);
+    console.log(currentStep);
+  }, [stringifiedAnswerData]);
 
   return (
     <QuestionaireContext.Provider
@@ -199,6 +206,7 @@ const QuestionaireProvider = ({ children }) => {
         nextStep,
         prevStep,
         steps: formSteps,
+        isDisabledNext,
         currentStepData,
       }}
     >

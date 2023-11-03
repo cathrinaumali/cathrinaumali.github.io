@@ -4,12 +4,12 @@ import QuestionaireContext from "../context/questionaireContext";
 
 import { foundationOptions } from "../../utils/constants.ts";
 
-const Foundation = () => {
+const Foundation = ({ currentStepData }) => {
   const {
     answerData: { foundation: houseFoundation },
     setAnswerData,
   } = useContext(QuestionaireContext);
-
+  //   console.log(currentStepData);
   const [foundation, setFoundation] = useState(houseFoundation);
 
   const handleChange = (event: SelectChangeEvent) => {

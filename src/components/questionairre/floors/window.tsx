@@ -29,7 +29,7 @@ const Window = ({ windowData, roomId }) => {
     answerData: { floors },
     setAnswerData,
   } = useContext(QuestionaireContext);
-  console.log(windowData);
+
   const [windowType, setWindowType] = useState(windowData?.type || "");
   const [selectedRadio, setSelectedRadio] = useState(
     windowData.selectedRadio || RADIO_ONE
@@ -38,6 +38,7 @@ const Window = ({ windowData, roomId }) => {
   const [glassType, setGlassType] = useState(windowData.glassType);
 
   const updateWindowData = (updates) => {
+    console.log(updates);
     const newData = updateWindowProperties(
       floors,
       roomId,
@@ -52,9 +53,10 @@ const Window = ({ windowData, roomId }) => {
     updateWindowData({ type: event.target.value });
   };
 
-  const onInputTypeSelect = (e) => {
+  const onCheckboxSelect = (e) => {
     setSelectedRadio(e.target.value);
-    updateWindowData({ selectedRadio: e.target.value });
+    updateWindowData({ selectedRadio: e.target.value, type: "" });
+    setWindowType("");
   };
 
   const onSelectChange = (event) => {
@@ -81,29 +83,35 @@ const Window = ({ windowData, roomId }) => {
                 value={RADIO_ONE}
                 control={<Radio />}
                 label="Add new"
-                onChange={onInputTypeSelect}
+                onChange={onCheckboxSelect}
               />
-              <InputField
-                name="windowType"
-                disabled={selectedRadio !== RADIO_ONE}
-                variant={selectedRadio !== RADIO_ONE ? "filled" : "outlined"}
-                value={windowType}
-                onChange={onWindowTypeChange}
-              />
+              {selectedRadio === RADIO_ONE && (
+                <InputField
+                  name="windowType"
+                  disabled={selectedRadio !== RADIO_ONE}
+                  variant={selectedRadio !== RADIO_ONE ? "filled" : "outlined"}
+                  value={windowType}
+                  onChange={onWindowTypeChange}
+                />
+              )}
+
               <FormControlLabel
                 value={RADIO_TWO}
                 control={<Radio />}
                 label="Select from the list"
-                onChange={onInputTypeSelect}
+                onChange={onCheckboxSelect}
               />
-              <CustomSelect
-                name="windowType"
-                value={windowType}
-                disabled={selectedRadio !== RADIO_TWO}
-                variant={selectedRadio !== RADIO_TWO ? "filled" : "outlined"}
-                options={windowTypes}
-                onChange={onWindowTypeChange}
-              />
+
+              {selectedRadio === RADIO_TWO && (
+                <CustomSelect
+                  name="windowType"
+                  value={windowType}
+                  disabled={selectedRadio !== RADIO_TWO}
+                  variant={selectedRadio !== RADIO_TWO ? "filled" : "outlined"}
+                  options={windowTypes}
+                  onChange={onWindowTypeChange}
+                />
+              )}
             </RadioGroup>
           </FormControl>
         </div>

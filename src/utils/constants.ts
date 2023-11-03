@@ -60,6 +60,7 @@ export const houseDetailsData: HouseDetailsData = {
     length: null,
   },
   floors: [],
+  floorSpecs: 0,
   roofType: null,
   garden: {
     type: null,
