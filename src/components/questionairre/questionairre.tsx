@@ -23,7 +23,7 @@ const Questionairre: React.FC<QuestionairreProps> = () => {
   //   console.log(currentStep, currentStepData);
   //   console.log(currentStep, steps?.[currentStep]?.id);
   //   console.log(steps.filter((step) => !step.completed));
-  console.log(currentStep, answerData[steps?.[currentStep]?.page]);
+  //   console.log(currentStep, answerData[steps?.[currentStep]?.page]);
 
   const currentStepObj = currentStepData?.[0] || {};
 

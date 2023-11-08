@@ -15,9 +15,9 @@ type Step = {
   id: number;
   page: "foundation" | "size" | "floors" | "floorSpecs" | "roofType" | "garden";
   content: any;
-  completed: booelan;
-  nextStepIsDisabled: booelan;
-  prevStateIsDisabled: booelan;
+  completed: boolean;
+  nextStepIsDisabled: boolean;
+  prevStateIsDisabled: boolean;
 };
 
 const defaultSteps: Step[] = [
@@ -78,6 +78,7 @@ const QuestionaireProvider = ({ children }) => {
     storedAnswerData || houseDetailsData
   );
   const [formSteps, setFormSteps] = useState<Step[]>(defaultSteps);
+  console.log(formSteps);
   const [currentStepData, setCurrentStepData] = useState<Step>(defaultSteps[0]);
   const [currentStep, setCurrentStep] = useState<number>(1);
 
@@ -136,59 +137,74 @@ const QuestionaireProvider = ({ children }) => {
   useEffect(() => {
     const answerDataString = JSON.stringify(answerData);
     const storedAnswerData = localStorage.getItem("answerData");
-    // console.log(answerData, JSON.parse(localStorage.getItem("answerData")));
     if (storedAnswerData !== answerDataString) {
       localStorage.setItem("answerData", answerDataString);
     }
   }, [answerData, storedAnswerData]);
 
   //** Set completed state based on values from localStorage */
-  useEffect(() => {
-    const storedAnswerData = JSON.parse(localStorage.getItem("answerData"));
-    const updatedSteps = updateSteps(defaultSteps, storedAnswerData);
+  //   useEffect(() => {
+  //     const storedAnswerData = JSON.parse(localStorage.getItem("answerData"));
+  //     const newSteps = updateSteps(defaultSteps, storedAnswerData);
+  //     const firstIncompleteStep = newSteps.find((step) => !step.completed);
+  //     if (firstIncompleteStep) {
+  //       setCurrentStep(firstIncompleteStep.id);
+  //     } else {
+  //       // Handle the case when all steps are completed
+  //     }
 
-    // Find the first incomplete step after updating
-    const firstIncompleteStep = updatedSteps.find((step) => !step.completed);
-    // console.log(updatedSteps);
-    // console.log(firstIncompleteStep);
+  //     setFormSteps(newSteps);
+  //   }, []);
 
-    // Set the current step to the id of the first incomplete step
-    if (firstIncompleteStep) {
-      setCurrentStep(firstIncompleteStep.id);
-    } else {
-      // Handle the case when all steps are completed
-    }
+  /** Get the form data of current step */
+  //   useEffect(() => {
+  //     const stepData = findCurrentPage(formSteps, currentStep);
+  //     setCurrentStepData(stepData);
+  //   }, [currentStep, formSteps]);
 
-    setFormSteps(updatedSteps);
-  }, [hasValues]);
+  //   const checkCompleted = (step, answerData) => {
+  //     let completed = false;
 
-  useEffect(() => {
-    const stepData = findCurrentPage(formSteps, currentStep);
-    setCurrentStepData(stepData);
-  }, [currentStep, formSteps]);
+  //     switch (step.page) {
+  //       case "floors":
+  //         completed = answerData[step.page]?.length > 0;
+  //         break;
 
-  useEffect(() => {
-    const filtered = formSteps?.filter((step) => step.id === currentStep);
-    const updatedCurrentStep = filtered?.map((step) => {
-      if (step.id === currentStep) {
-        // const completed = hasValues(answerData[step.page]);
-        let completed = false;
-        if (step.page === "floors") {
-          //   console.log(step.page, answerData[step.page]);
-          completed = answerData[step.page]?.length > 0;
-        } else {
-          completed = answerData ? hasValues(answerData[step.page]) : false;
-        }
-        return {
-          ...step,
-          completed,
-          nextStepIsDisabled: !completed,
-        };
-      }
-      return step;
-    });
-    setCurrentStepData(updatedCurrentStep);
-  }, [answerData, currentStep, formSteps, hasValues, stringifiedAnswerData]);
+  //       case "floorSpecs":
+  //         break;
+
+  //       default:
+  //         completed = answerData ? hasValues(answerData[step.page]) : false;
+  //     }
+
+  //     return completed;
+  //   };
+
+  //   useEffect(() => {
+  //     const storedAnswerData = localStorage.getItem("answerData");
+  //     if (storedAnswerData !== stringifiedAnswerData) {
+  //       const filtered = formSteps?.filter((step) => step.id === currentStep);
+  //       const updatedCurrentStep = filtered?.map((step) => {
+  //         if (step.id === currentStep) {
+  //           // const completed = hasValues(answerData[step.page]);
+  //           let completed = false;
+  //           if (step.page === "floors") {
+  //             //   console.log(step.page, answerData[step.page]);
+  //             completed = answerData[step.page]?.length > 0;
+  //           } else {
+  //             completed = answerData ? hasValues(answerData[step.page]) : false;
+  //           }
+  //           return {
+  //             ...step,
+  //             completed,
+  //             nextStepIsDisabled: !completed,
+  //           };
+  //         }
+  //         return step;
+  //       });
+  //       setCurrentStepData(updatedCurrentStep);
+  //     }
+  //   }, [answerData, currentStep, formSteps, hasValues, stringifiedAnswerData]);
 
   return (
     <QuestionaireContext.Provider

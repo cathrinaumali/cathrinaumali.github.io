@@ -28,7 +28,10 @@ const Window = ({ windowData, roomId }) => {
   const {
     answerData: { floors },
     setAnswerData,
+    currentStepData,
   } = useContext(QuestionaireContext);
+  //   console.log(currentStepData);
+  //   console.log(windowData);
 
   const [windowType, setWindowType] = useState(windowData?.type || "");
   const [selectedRadio, setSelectedRadio] = useState(
@@ -38,7 +41,6 @@ const Window = ({ windowData, roomId }) => {
   const [glassType, setGlassType] = useState(windowData.glassType);
 
   const updateWindowData = (updates) => {
-    console.log(updates);
     const newData = updateWindowProperties(
       floors,
       roomId,
