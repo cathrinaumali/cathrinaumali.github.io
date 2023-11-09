@@ -14,11 +14,23 @@ import ResultComponent from "./result";
 // Styles
 import "./questionairre.scss";
 
-export default function Questionairre() {
-  const { steps, nextStep, prevStep, currentStep, answerData, handleReset } =
-    useContext(QuestionaireContext);
-  const allCompleted = steps.every((item) => item.completed);
+const getIsAllCompleted = () => {
+  const storedAnswerData = localStorage.getItem("answerData");
+  const allCompleted = localStorage.getItem("allAnswersCompleted");
+  return storedAnswerData && allCompleted;
+};
 
+export default function Questionairre() {
+  const {
+    steps,
+    nextStep,
+    prevStep,
+    currentStep,
+    answerData,
+    handleReset,
+    submitForm,
+  } = useContext(QuestionaireContext);
+  const allCompleted = getIsAllCompleted();
   return (
     <React.Fragment>
       <CssBaseline />
@@ -75,6 +87,7 @@ export default function Questionairre() {
                       ) : (
                         <Button
                           variant="outlined"
+                          onClick={submitForm}
                           disabled={step?.nextStepIsDisabled}
                         >
                           Submit

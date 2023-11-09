@@ -87,34 +87,26 @@ const QuestionaireProvider = ({ children }: { children: React.ReactNode }) => {
 
   const handleReset = () => {
     localStorage.removeItem("answerData");
+    localStorage.removeItem("allAnswersCompleted");
+    window.location.href = "/";
+  };
+
+  const submitForm = () => {
+    const allCompleted = formSteps.every((item) => item.completed);
+    localStorage.setItem("allAnswersCompleted", allCompleted);
     window.location.href = "/";
   };
 
   // Update local storage on every update of answerData
-  const storedAnswerData = localStorage.getItem("answerData");
-
   useEffect(() => {
+    const storedAnswerData = localStorage.getItem("answerData");
     const updatedAnswers = JSON.stringify(answerData);
     if (storedAnswerData !== updatedAnswers) {
       localStorage.setItem("answerData", updatedAnswers);
       const mappedValues = updateformSteps(formSteps, answerData);
       setFormSteps(mappedValues);
     }
-  }, [storedAnswerData, answerData, formSteps]);
-
-  // useEffect(() => {
-  //   const updatedAnswers = JSON.stringify(answerData);
-  //   const storedAnswerData = localStorage.getItem("answerData");
-  //   console.log(updatedAnswers);
-  //   console.log(storedAnswerData);
-
-  //   if (storedAnswerData !== updatedAnswers) {
-  //     localStorage.setItem("answerData", updatedAnswers);
-  //     const mappedValues = updateformSteps(formSteps, answerData);
-  //     setFormSteps(mappedValues);
-  //     getFirstIncompleteStepId(mappedValues);
-  //   }
-  // }, [answerData, formSteps]);
+  }, [setAnswerData, answerData, formSteps]);
 
   // Set the first unanswered step to start off where user left off
   useLayoutEffect(() => {
@@ -134,6 +126,7 @@ const QuestionaireProvider = ({ children }: { children: React.ReactNode }) => {
         prevStep,
         steps: formSteps,
         handleReset,
+        submitForm,
       }}
     >
       {children}
