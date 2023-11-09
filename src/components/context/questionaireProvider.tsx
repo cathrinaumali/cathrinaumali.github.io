@@ -63,6 +63,12 @@ const getDataFromStorage = () => {
   return storedAnswerData;
 };
 
+const getFirstIncompleteStepId = (steps: Step[]): number | null => {
+  const firstIncompleteStep = steps.find((step) => step.completed === false);
+  console.log(firstIncompleteStep.id, firstIncompleteStep.id - 1);
+  return firstIncompleteStep ? firstIncompleteStep.id : 1;
+};
+
 const QuestionaireProvider = ({ children }: { children: React.ReactNode }) => {
   const defaultAnswerData = getDataFromStorage();
   const updatedSteps = updateformSteps(defaultSteps, defaultAnswerData);
@@ -85,6 +91,7 @@ const QuestionaireProvider = ({ children }: { children: React.ReactNode }) => {
     window.location.href = "/";
   };
 
+  // Update local storage on every update of answerData
   useEffect(() => {
     const updatedAnswers = JSON.stringify(answerData);
     const storedAnswerData = localStorage.getItem("answerData");
@@ -92,8 +99,17 @@ const QuestionaireProvider = ({ children }: { children: React.ReactNode }) => {
       localStorage.setItem("answerData", updatedAnswers);
       const mappedValues = updateformSteps(formSteps, answerData);
       setFormSteps(mappedValues);
+      getFirstIncompleteStepId(mappedValues);
     }
   }, [answerData, formSteps]);
+
+  // Set the first unanswered step to start off where user left off
+  useEffect(() => {
+    const defaultAnswerData = getDataFromStorage();
+    const updatedSteps = updateformSteps(defaultSteps, defaultAnswerData);
+    const newStep = getFirstIncompleteStepId(updatedSteps);
+    setCurrentStep(newStep);
+  }, []);
 
   return (
     <QuestionaireContext.Provider
