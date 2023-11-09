@@ -45,12 +45,14 @@ const Garden = () => {
         onChange={handleChange}
         options={gardenTypes}
       />
-      <MultipleSelectCheckmarks
-        className="plant-multiple-form-control"
-        options={plantOptions}
-        value={answerData?.garden?.plants}
-        onChange={hadlePlantChange}
-      />
+      {selectedGarden && (
+        <MultipleSelectCheckmarks
+          className="plant-multiple-form-control"
+          options={plantOptions}
+          value={answerData?.garden?.plants}
+          onChange={hadlePlantChange}
+        />
+      )}
     </div>
   );
 };

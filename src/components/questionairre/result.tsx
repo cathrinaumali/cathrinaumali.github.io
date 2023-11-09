@@ -31,7 +31,7 @@ const ResultComponent = ({ data, handleReset }: ResultProps) => {
       >
         <CardContent>
           <Typography variant="h5" gutterBottom>
-            <b> 🏡 House Details</b>
+            <b> 🏡 Your house details</b>
           </Typography>
           <List>
             <ListItem>

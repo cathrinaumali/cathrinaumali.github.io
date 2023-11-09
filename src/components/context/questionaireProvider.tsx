@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import QuestionaireContext from "./questionaireContext";
 // Components
 import Foundation from "./../questionairre/foundation";
@@ -65,7 +65,6 @@ const getDataFromStorage = () => {
 
 const getFirstIncompleteStepId = (steps: Step[]): number | null => {
   const firstIncompleteStep = steps.find((step) => step.completed === false);
-  console.log(firstIncompleteStep.id, firstIncompleteStep.id - 1);
   return firstIncompleteStep ? firstIncompleteStep.id : 1;
 };
 
@@ -92,19 +91,33 @@ const QuestionaireProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // Update local storage on every update of answerData
+  const storedAnswerData = localStorage.getItem("answerData");
+
   useEffect(() => {
     const updatedAnswers = JSON.stringify(answerData);
-    const storedAnswerData = localStorage.getItem("answerData");
     if (storedAnswerData !== updatedAnswers) {
       localStorage.setItem("answerData", updatedAnswers);
       const mappedValues = updateformSteps(formSteps, answerData);
       setFormSteps(mappedValues);
-      getFirstIncompleteStepId(mappedValues);
     }
-  }, [answerData, formSteps]);
+  }, [storedAnswerData, answerData, formSteps]);
+
+  // useEffect(() => {
+  //   const updatedAnswers = JSON.stringify(answerData);
+  //   const storedAnswerData = localStorage.getItem("answerData");
+  //   console.log(updatedAnswers);
+  //   console.log(storedAnswerData);
+
+  //   if (storedAnswerData !== updatedAnswers) {
+  //     localStorage.setItem("answerData", updatedAnswers);
+  //     const mappedValues = updateformSteps(formSteps, answerData);
+  //     setFormSteps(mappedValues);
+  //     getFirstIncompleteStepId(mappedValues);
+  //   }
+  // }, [answerData, formSteps]);
 
   // Set the first unanswered step to start off where user left off
-  useEffect(() => {
+  useLayoutEffect(() => {
     const defaultAnswerData = getDataFromStorage();
     const updatedSteps = updateformSteps(defaultSteps, defaultAnswerData);
     const newStep = getFirstIncompleteStepId(updatedSteps);
