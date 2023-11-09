@@ -7,7 +7,7 @@ import Floors from "./../questionairre/floors/floors";
 import RoofType from "./../questionairre/roofType";
 import Garden from "./../questionairre/Garden";
 // Types
-import { Step } from "../../utils/types";
+import { Step, HouseDetailsData } from "../../utils/types";
 // Constants
 import { houseDetailsData } from "../../utils/constants.ts";
 // Helpers
@@ -67,7 +67,8 @@ const QuestionaireProvider = ({ children }: { children: React.ReactNode }) => {
   const defaultAnswerData = getDataFromStorage();
   const updatedSteps = updateformSteps(defaultSteps, defaultAnswerData);
 
-  const [answerData, setAnswerData] = useState(defaultAnswerData);
+  const [answerData, setAnswerData] =
+    useState<HouseDetailsData>(defaultAnswerData);
   const [formSteps, setFormSteps] = useState<Step[]>(updatedSteps);
   const [currentStep, setCurrentStep] = useState<number>(1);
 

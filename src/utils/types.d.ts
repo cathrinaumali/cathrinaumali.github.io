@@ -35,9 +35,17 @@ export interface HouseDetailsData {
   garden: Garden;
 }
 
+type Pages =
+  | "foundation"
+  | "size"
+  | "floors"
+  | "floorSpecs"
+  | "roofType"
+  | "garden";
+
 export type Step = {
   id: number;
-  page: "foundation" | "size" | "floors" | "floorSpecs" | "roofType" | "garden";
+  page: Pages;
   content: React.ReactNode;
   completed: boolean;
   nextStepIsDisabled: boolean;

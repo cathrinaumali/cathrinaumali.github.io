@@ -10,8 +10,12 @@ import {
 } from "@mui/material";
 // Styles
 import "./result.scss";
+// Types
+import { HouseDetailsData } from "../../utils/types";
 
-const ResultComponent = ({ data, handleReset }) => {
+type ResultProps = HouseDetailsData;
+
+const ResultComponent = ({ data, handleReset }: ResultProps) => {
   const { foundation, size, floors, roofType, garden } = data;
   return (
     <div className="result-page__container">
