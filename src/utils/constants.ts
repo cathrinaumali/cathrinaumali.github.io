@@ -2,16 +2,12 @@ import { HouseDetailsData } from "./types";
 
 export const houseDetailsData: HouseDetailsData = {
   foundation: null,
-  size: {
-    width: null,
-    length: null,
-  },
+  size: null,
   floors: [],
-  floorSpecs: 0,
   roofType: null,
   garden: {
     type: null,
-    plants: null,
+    plants: [],
   },
 };
 
@@ -76,56 +72,57 @@ export const gardenTypes = [
   { value: "butterfly", label: "Butterfly Garden" },
 ];
 
-// {
-//     "foundation": "brick",
-//     "size": {
-//       "width": "1",
-//       "length": "1"
+export const requiredRoomFields = ["floorType", "roomType", "size", "windows"];
+export const requiredWindowFields = ["type", "style", "glassType"];
+
+// const sampleOutput = {
+//   foundation: "brick",
+//   size: 120,
+//   floors: [
+//     {
+//       id: 1,
+//       name: "Floor 1",
+//       count: null,
+//       rooms: [
+//         {
+//           id: 1,
+//           name: "Room 1",
+//           size: "24",
+//           floorType: "wood",
+//           count: null,
+//           roomType: "lounge",
+//           windows: [
+//             {
+//               id: 3,
+//               name: "Window 3",
+//               type: null,
+//               customType: null,
+//               style: null,
+//               glassType: null,
+//             },
+//           ],
+//         },
+//       ],
 //     },
-//     "floors": [
-//       {
-//         "id": 1,
-//         "name": "Floor 1",
-//         "count": null,
-//         "rooms": [
-//           {
-//             "id": 1,
-//             "name": "Room 1",
-//             "size": "24",
-//             "floorType": "wood",
-//             "windows": [
-//               {
-//                 "id": 3,
-//                 "name": "Window 3",
-//                 "type": null,
-//                 "customType": null,
-//                 "style": null,
-//                 "glassType": null
-//               }
-//             ],
-//             "roomType": "lounge"
-//           }
-//         ]
-//       },
-//       {
-//         "id": 2,
-//         "name": "Floor 2",
-//         "count": null,
-//         "rooms": [
-//           {
-//             "id": 1,
-//             "name": "Room 1",
-//             "size": "24",
-//             "floorType": "wood",
-//             "windows": [],
-//             "roomType": "lounge"
-//           }
-//         ]
-//       }
-//     ],
-//     "roofType": null,
-//     "garden": {
-//       "type": null,
-//       "plants": null
-//     }
-//   }
+//     {
+//       id: 2,
+//       name: "Floor 2",
+//       count: null,
+//       rooms: [
+//         {
+//           id: 1,
+//           name: "Room 1",
+//           size: "24",
+//           floorType: "wood",
+//           roomType: "lounge",
+//           windows: [],
+//         },
+//       ],
+//     },
+//   ],
+//   roofType: null,
+//   garden: {
+//     type: null,
+//     plants: null,
+//   },
+// };

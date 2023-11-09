@@ -1,24 +1,24 @@
 import React, { useState, useContext } from "react";
 import FormControl from "@mui/material/FormControl";
 import { SelectChangeEvent } from "@mui/material/Select";
-
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
-
+// Context
 import QuestionaireContext from "../../context/questionaireContext";
-
+// Component
 import InputField from "../../ui/inputField";
 import CustomSelect from "../../ui/customSelect";
-
+// Constants
 import {
   windowTypes,
   windowStyles,
   glassTypes,
 } from "../../../utils/constants.ts";
+// Helpers
 import { updateWindowProperties } from "../../../utils/helpers.ts";
-
+// Styles
 import "./window.scss";
 
 const RADIO_ONE: string = "add-new";
@@ -28,10 +28,7 @@ const Window = ({ windowData, roomId }) => {
   const {
     answerData: { floors },
     setAnswerData,
-    currentStepData,
   } = useContext(QuestionaireContext);
-  //   console.log(currentStepData);
-  //   console.log(windowData);
 
   const [windowType, setWindowType] = useState(windowData?.type || "");
   const [selectedRadio, setSelectedRadio] = useState(

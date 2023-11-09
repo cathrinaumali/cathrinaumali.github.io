@@ -1,15 +1,17 @@
 import React, { useState, useContext } from "react";
-import CustomSelect from "../ui/customSelect";
+// Context
 import QuestionaireContext from "../context/questionaireContext";
-
+// Component
+import CustomSelect from "../ui/customSelect";
+// Constants
 import { foundationOptions } from "../../utils/constants.ts";
 
-const Foundation = ({ currentStepData }) => {
+const Foundation = () => {
   const {
     answerData: { foundation: houseFoundation },
     setAnswerData,
   } = useContext(QuestionaireContext);
-  //   console.log(currentStepData);
+
   const [foundation, setFoundation] = useState(houseFoundation);
 
   const handleChange = (event: SelectChangeEvent) => {

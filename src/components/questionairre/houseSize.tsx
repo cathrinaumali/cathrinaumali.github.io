@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
+// Context
 import QuestionaireContext from "../context/questionaireContext";
+// Component
 import InputField from "../ui/inputField";
-
+// Styles
 import "./houseSize.scss";
 
 const HouseSize = () => {
   const {
     setAnswerData,
-    answerData: {
-      size: { width, length },
-    },
+    answerData: { size },
   } = useContext(QuestionaireContext);
 
   return (
@@ -17,31 +17,13 @@ const HouseSize = () => {
       <label>Preferred house size? *</label>
       <div className="house-size__fields">
         <InputField
-          label="Width in meters?"
-          value={width}
+          label="Size in Sqm?"
+          value={size}
           showPlaceholderLabel
           onChange={(event: SelectChangeEvent) => {
             setAnswerData((prev) => ({
               ...prev,
-              size: {
-                ...prev.size,
-                width: event.target.value,
-              },
-            }));
-          }}
-          id="floor-count"
-        />
-        <InputField
-          label="Length in meters?"
-          value={length}
-          showPlaceholderLabel
-          onChange={(event: SelectChangeEvent) => {
-            setAnswerData((prev) => ({
-              ...prev,
-              size: {
-                ...prev.size,
-                length: event.target.value,
-              },
+              size: event.target.value,
             }));
           }}
           id="floor-count"

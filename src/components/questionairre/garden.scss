@@ -1,0 +1,10 @@
+.garden {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  .plant-multiple-form-control {
+    margin: 0;
+    width: 100%;
+  }
+}

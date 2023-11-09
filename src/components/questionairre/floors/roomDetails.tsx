@@ -1,16 +1,18 @@
 import React, { useState, useContext } from "react";
+// Context
+import QuestionaireContext from "../../context/questionaireContext";
+// Component
 import InputField from "../../ui/inputField";
 import CustomSelect from "../../ui/customSelect";
-
 import Window from "./window";
-
-import QuestionaireContext from "../../context/questionaireContext";
-
+// Helpers
 import {
   updateRoomProperties,
   addWindowsToRoom,
 } from "../../../utils/helpers.ts";
+// Constants
 import { roomTypes, floorTypes } from "../../../utils/constants.ts";
+// Styles
 import "./roomDetails.scss";
 
 const RoomDetails = ({ data }) => {

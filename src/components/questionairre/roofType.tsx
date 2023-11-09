@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
-import CustomSelect from "../ui/customSelect";
+// Context
 import QuestionaireContext from "../context/questionaireContext";
+// Components
+import CustomSelect from "../ui/customSelect";
 
 const RoofType = () => {
   const { answerData, setAnswerData } = useContext(QuestionaireContext);

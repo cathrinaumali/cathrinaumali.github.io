@@ -29,11 +29,17 @@ export interface Garden {
 
 export interface HouseDetailsData {
   foundation: string | null;
-  size: {
-    width: number | null;
-    length: number | null;
-  };
+  size: string | null;
   floors: Floor[];
   roofType: string | null;
   garden: Garden;
 }
+
+export type Step = {
+  id: number;
+  page: "foundation" | "size" | "floors" | "floorSpecs" | "roofType" | "garden";
+  content: React.ReactNode;
+  completed: boolean;
+  nextStepIsDisabled: boolean;
+  prevStateIsDisabled: boolean;
+};
