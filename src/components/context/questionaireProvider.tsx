@@ -79,6 +79,11 @@ const QuestionaireProvider = ({ children }: { children: React.ReactNode }) => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
+  const handleReset = () => {
+    localStorage.removeItem("answerData");
+    window.location.href = "/";
+  };
+
   useEffect(() => {
     const updatedAnswers = JSON.stringify(answerData);
     const storedAnswerData = localStorage.getItem("answerData");
@@ -98,6 +103,7 @@ const QuestionaireProvider = ({ children }: { children: React.ReactNode }) => {
         nextStep,
         prevStep,
         steps: formSteps,
+        handleReset,
       }}
     >
       {children}

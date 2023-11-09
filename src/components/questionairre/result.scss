@@ -1,0 +1,18 @@
+.result-page * {
+  font-family: "Inter", sans-serif !important;
+}
+.result-page {
+  .floors-content {
+    margin-left: 10px;
+  }
+
+  &__container {
+    padding-bottom: 60px;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: end;
+    margin: 20px;
+  }
+}

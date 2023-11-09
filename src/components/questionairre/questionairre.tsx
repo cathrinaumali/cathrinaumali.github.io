@@ -10,12 +10,14 @@ import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import ResultComponent from "./result";
 // Styles
 import "./questionairre.scss";
 
 export default function Questionairre() {
-  const { steps, nextStep, prevStep, currentStep } =
+  const { steps, nextStep, prevStep, currentStep, answerData, handleReset } =
     useContext(QuestionaireContext);
+  const allCompleted = steps.every((item) => item.completed);
 
   return (
     <React.Fragment>
@@ -35,52 +37,56 @@ export default function Questionairre() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-        <Paper
-          variant="outlined"
-          sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
-        >
-          <div className="questionaire">
-            <PerfectScrollbar className="questionaire__scroll-container">
-              {steps.map((step) => (
-                <div
-                  key={step.id}
-                  style={step.id !== currentStep ? { display: "none" } : {}}
-                >
-                  <step.content currentStepData={step} />
+      <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
+        <PerfectScrollbar className="questionaire__scroll-container">
+          {allCompleted ? (
+            <ResultComponent data={answerData} handleReset={handleReset} />
+          ) : (
+            <Paper
+              variant="outlined"
+              sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 6 } }}
+            >
+              <div className="questionaire">
+                {steps.map((step) => (
+                  <div
+                    key={step.id}
+                    style={step.id !== currentStep ? { display: "none" } : {}}
+                  >
+                    <step.content currentStepData={step} />
 
-                  <div className="questionaire__buttons-container">
-                    {currentStep > 1 && (
-                      <Button
-                        variant="outlined"
-                        disabled={step?.prevStateIsDisabled}
-                        onClick={prevStep}
-                      >
-                        Previous
-                      </Button>
-                    )}
-                    {steps.length !== currentStep ? (
-                      <Button
-                        variant="outlined"
-                        onClick={nextStep}
-                        disabled={step?.nextStepIsDisabled}
-                      >
-                        Next
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="outlined"
-                        disabled={step?.nextStepIsDisabled}
-                      >
-                        Submit
-                      </Button>
-                    )}
+                    <div className="questionaire__buttons-container">
+                      {currentStep > 1 && (
+                        <Button
+                          variant="outlined"
+                          disabled={step?.prevStateIsDisabled}
+                          onClick={prevStep}
+                        >
+                          Previous
+                        </Button>
+                      )}
+                      {steps.length !== currentStep ? (
+                        <Button
+                          variant="outlined"
+                          onClick={nextStep}
+                          disabled={step?.nextStepIsDisabled}
+                        >
+                          Next
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="outlined"
+                          disabled={step?.nextStepIsDisabled}
+                        >
+                          Submit
+                        </Button>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </PerfectScrollbar>
-          </div>
-        </Paper>
+                ))}
+              </div>
+            </Paper>
+          )}
+        </PerfectScrollbar>
       </Container>
     </React.Fragment>
   );
