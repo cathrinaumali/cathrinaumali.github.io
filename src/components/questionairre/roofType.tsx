@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 // Context
-import QuestionaireContext from "../context/questionaireContext";
+import QuestionaireContext from "../../context/questionaireContext";
 // Components
 import CustomSelect from "../ui/customSelect";
 

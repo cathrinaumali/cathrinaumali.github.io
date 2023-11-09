@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 // Context
-import QuestionaireContext from "../../context/questionaireContext";
+import QuestionaireContext from "../../../context/questionaireContext.tsx";
 // Component
 import InputField from "../../ui/inputField";
 import FloorSpecifics from "./floorSpecifics";

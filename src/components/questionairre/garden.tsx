@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 // Context
-import QuestionaireContext from "../context/questionaireContext";
+import QuestionaireContext from "../../context/questionaireContext.tsx";
 // Components
 import MultipleSelectCheckmarks from "../ui/MultipleSelectCheckmarks";
 import CustomSelect from "../ui/customSelect";

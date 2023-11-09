@@ -6,7 +6,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 // Context
-import QuestionaireContext from "../../context/questionaireContext";
+import QuestionaireContext from "../../../context/questionaireContext.tsx";
 // Component
 import InputField from "../../ui/inputField";
 import CustomSelect from "../../ui/customSelect";

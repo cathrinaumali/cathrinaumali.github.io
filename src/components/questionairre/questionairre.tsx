@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 // Context
-import QuestionaireContext from "../context/questionaireContext";
+import QuestionaireContext from "../../context/questionaireContext";
 // Components
 import PerfectScrollbar from "react-perfect-scrollbar";
 import Button from "@mui/material/Button";
@@ -64,7 +64,7 @@ export default function Questionairre() {
                     key={step.id}
                     style={step.id !== currentStep ? { display: "none" } : {}}
                   >
-                    <step.content currentStepData={step} />
+                    <step.content />
 
                     <div className="questionaire__buttons-container">
                       {currentStep > 1 && (

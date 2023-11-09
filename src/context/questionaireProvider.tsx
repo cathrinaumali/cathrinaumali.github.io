@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import QuestionaireContext from "./questionaireContext";
+import QuestionaireContext from "./questionaireContext.tsx";
 // Components
-import Foundation from "./../questionairre/foundation";
-import HouseSize from "./../questionairre/houseSize";
-import Floors from "./../questionairre/floors/floors";
-import RoofType from "./../questionairre/roofType";
-import Garden from "./../questionairre/Garden";
+import Foundation from "../components/questionairre/foundation.tsx";
+import HouseSize from "../components/questionairre/houseSize.tsx";
+import Floors from "../components/questionairre/floors/floors.tsx";
+import RoofType from "../components/questionairre/roofType.tsx";
+import Garden from "../components/questionairre/garden.tsx";
 // Types
-import { Step, HouseDetailsData } from "../../utils/types";
+import { Step, HouseDetailsData } from "../utils/types";
 // Constants
-import { houseDetailsData } from "../../utils/constants.ts";
+import { houseDetailsData } from "../utils/constants.ts";
 // Helpers
-import { updateformSteps } from "../../utils/helpers.ts";
+import { updateformSteps } from "../utils/helpers.ts";
 
 const defaultSteps: Step[] = [
   {
@@ -63,7 +63,7 @@ const getDataFromStorage = () => {
   return storedAnswerData;
 };
 
-const getFirstIncompleteStepId = (steps: Step[]): number | null => {
+const getFirstIncompleteStepId = (steps: Step[]): number => {
   const firstIncompleteStep = steps.find((step) => step.completed === false);
   return firstIncompleteStep ? firstIncompleteStep.id : 1;
 };
@@ -93,7 +93,7 @@ const QuestionaireProvider = ({ children }: { children: React.ReactNode }) => {
 
   const submitForm = () => {
     const allCompleted = formSteps.every((item) => item.completed);
-    localStorage.setItem("allAnswersCompleted", allCompleted);
+    localStorage.setItem("allAnswersCompleted", JSON.stringify(allCompleted));
     window.location.href = "/";
   };
 

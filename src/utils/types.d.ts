@@ -12,7 +12,7 @@ export interface Room {
   size: number | null;
   floorType: string | null;
   roomType: string | null;
-  windows: Window[] | null;
+  windows: Window[];
 }
 
 export interface Floor {
@@ -35,19 +35,24 @@ export interface HouseDetailsData {
   garden: Garden;
 }
 
-type Pages =
-  | "foundation"
-  | "size"
-  | "floors"
-  | "floorSpecs"
-  | "roofType"
-  | "garden";
+type Pages = "foundation" | "size" | "floors" | "roofType" | "garden";
 
 export type Step = {
   id: number;
   page: Pages;
-  content: React.ReactNode;
+  content: React.ComponentType<unknown>;
   completed: boolean;
   nextStepIsDisabled: boolean;
   prevStateIsDisabled: boolean;
 };
+
+interface QuestionaireContextType {
+  steps: Step[];
+  nextStep: () => void;
+  prevStep: () => void;
+  currentStep: number;
+  answerData: HouseDetailsData;
+  setAnswerData: React.Dispatch<React.SetStateAction<unknown>>;
+  handleReset: () => void;
+  submitForm: () => void;
+}

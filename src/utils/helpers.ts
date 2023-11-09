@@ -1,5 +1,5 @@
 import { requiredRoomFields, requiredWindowFields } from "./constants";
-import { Step, Floor, Window, Room } from "./types";
+import { Step, Floor, Window, Room, HouseDetailsData, Garden } from "./types";
 
 /**
  * Function to create an array of floors with rooms
@@ -37,7 +37,7 @@ export const addRoomsToFloor = (
   floorId: number,
   roomCount: number
 ) => {
-  const floorArray = [...floors];
+  const floorArray: Floor[] = [...floors];
   const createRoom = (id: number) => ({
     id,
     name: `Room ${id}`,
@@ -92,8 +92,8 @@ export const addWindowsToRoom = (
 
   // Find the floor and room with the specified roomId
   const roomToUpdate = updatedFloors
-    .flatMap((floor) => floor.rooms)
-    .find((room) => room.id === roomId);
+    .flatMap((floor: Floor) => floor.rooms)
+    .find((room: Room) => room.id === roomId);
 
   if (roomToUpdate) {
     // Create a function to generate a window object
@@ -232,7 +232,7 @@ export const hasValues = (obj: Step): boolean => {
   return false; // Default to false for other cases
 };
 
-const validateGarden = (garden) => {
+const validateGarden = (garden: Garden) => {
   if (
     !garden ||
     !garden.type ||
@@ -246,20 +246,18 @@ const validateGarden = (garden) => {
   return true;
 };
 
-export const updateformSteps = (steps: Step[], answers: string | null) => {
-  return steps?.map(
-    (value: { page: string | number; nextStepIsDisabled: boolean }) => {
-      let completed = false;
-      if (value.page === "floors") {
-        completed = validateFloors(answers?.[value.page]);
-      } else if (value.page === "garden") {
-        completed = validateGarden(answers?.[value.page]);
-      } else {
-        completed = hasValues(answers?.[value.page]);
-      }
-      value.nextStepIsDisabled = !completed;
-
-      return { ...value, completed };
+export const updateformSteps = (steps: Step[], answers: HouseDetailsData) => {
+  return steps?.map((value: Step) => {
+    let completed = false;
+    if (value.page === "floors") {
+      completed = validateFloors(answers?.[value.page]);
+    } else if (value.page === "garden") {
+      completed = validateGarden(answers?.[value.page]);
+    } else {
+      completed = hasValues(answers?.[value.page]);
     }
-  );
+    value.nextStepIsDisabled = !completed;
+
+    return { ...value, completed };
+  });
 };
