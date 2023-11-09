@@ -15,7 +15,7 @@ const plantOptions = listOfPlants.data?.map((plant) => plant.common_name);
 const Garden = () => {
   const { answerData, setAnswerData } = useContext(QuestionaireContext);
   const [selectedGarden, setSelectedGarden] = useState(
-    answerData?.garden?.type || ""
+    answerData?.garden?.type || null
   );
 
   const handleChange = (event: SelectChangeEvent) => {

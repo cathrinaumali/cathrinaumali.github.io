@@ -23,6 +23,7 @@ import "./window.scss";
 
 const RADIO_ONE: string = "add-new";
 const RADIO_TWO: string = "select";
+type SELECTED_RADIO = "add-new" | "select";
 
 const Window = ({ windowData, roomId }) => {
   const {
@@ -30,8 +31,10 @@ const Window = ({ windowData, roomId }) => {
     setAnswerData,
   } = useContext(QuestionaireContext);
 
-  const [windowType, setWindowType] = useState(windowData?.type || "");
-  const [selectedRadio, setSelectedRadio] = useState(
+  const [windowType, setWindowType] = useState<string | null>(
+    windowData?.type || null
+  );
+  const [selectedRadio, setSelectedRadio] = useState<SELECTED_RADIO>(
     windowData.selectedRadio || RADIO_ONE
   );
   const [windowStyle, setWindowStyle] = useState(windowData.style);
@@ -54,8 +57,8 @@ const Window = ({ windowData, roomId }) => {
 
   const onCheckboxSelect = (e) => {
     setSelectedRadio(e.target.value);
-    updateWindowData({ selectedRadio: e.target.value, type: "" });
-    setWindowType("");
+    updateWindowData({ selectedRadio: e.target.value, type: null });
+    setWindowType(null);
   };
 
   const onSelectChange = (event) => {

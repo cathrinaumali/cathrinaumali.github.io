@@ -169,7 +169,7 @@ export const validateFloors = (floors: Floor[]) => {
 
     for (const room of floor.rooms) {
       const missingRoomFields = requiredRoomFields.filter(
-        (field) => !room[field]
+        (field) => !room[field] && room[field] !== ""
       );
 
       if (missingRoomFields.length > 0) {
@@ -195,7 +195,7 @@ export const validateFloors = (floors: Floor[]) => {
 
       for (const window of room.windows) {
         const missingWindowFields = requiredWindowFields.filter(
-          (field) => !window[field]
+          (field) => !window[field] && window[field] !== ""
         );
 
         if (missingWindowFields.length > 0) {
