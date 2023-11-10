@@ -16,10 +16,12 @@ const HouseSize = () => {
 
   return (
     <div className="house-size">
-      <label>Preferred house size? *</label>
+      <label>
+        Preferred house size? <span className="required-form-field">*</span>
+      </label>
       <div className="house-size__fields">
         <InputField
-          label="Size in Sqm?"
+          label="Size in sqm?"
           value={size}
           showPlaceholderLabel
           onChange={(event: ChangeEvent<HTMLInputElement>) => {

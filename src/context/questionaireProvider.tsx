@@ -3,7 +3,7 @@ import QuestionaireContext from "./questionaireContext.tsx";
 // Components
 import Foundation from "../components/questionairre/foundation.tsx";
 import HouseSize from "../components/questionairre/houseSize.tsx";
-import Floors from "../components/questionairre/floors/floors.tsx";
+import Floors from "../components/questionairre/floors";
 import RoofType from "../components/questionairre/roofType.tsx";
 import Garden from "../components/questionairre/garden.tsx";
 // Types

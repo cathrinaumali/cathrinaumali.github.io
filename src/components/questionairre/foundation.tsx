@@ -27,7 +27,7 @@ const Foundation = () => {
 
   return (
     <CustomSelect
-      label="What type of foundation would you like for your house"
+      label="What type of foundation would you like for your house?"
       placeholder="Select Foundation"
       name="foundation"
       value={foundation}

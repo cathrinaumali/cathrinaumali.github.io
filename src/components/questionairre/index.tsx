@@ -10,11 +10,11 @@ import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import ResultComponent from "./result";
+import ResultComponent from "../result/result";
 // Types
 import { Step } from "../../utils/types";
 // Styles
-import "./questionairre.scss";
+import "./index.scss";
 
 const getIsAllCompleted = () => {
   const storedAnswerData = localStorage.getItem("answerData");

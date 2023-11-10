@@ -1,6 +1,6 @@
 import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
-import Questionairre from "./components/questionairre/questionairre";
+import Questionairre from "./components/questionairre";
 import QuestionaireProvider from "./context/questionaireProvider";
 
 function App() {

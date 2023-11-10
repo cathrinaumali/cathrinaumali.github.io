@@ -1,3 +1,4 @@
+import React from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -7,7 +8,7 @@ import { SelectChangeEvent } from "@mui/material";
 import { SelectOptionProps } from "../../utils/types";
 
 interface CustomSelectProps {
-  label?: string;
+  label?: string | React.ReactNode;
   name?: string;
   value?: string;
   onChange: (event: SelectChangeEvent) => void;

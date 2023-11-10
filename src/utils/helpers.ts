@@ -146,9 +146,10 @@ export const updateWindowProperties = (
   return updatedFloors;
 };
 
+const showDebugger = false;
 export const validateFloors = (floors: Floor[]) => {
   if (!Array.isArray(floors) || floors.length === 0) {
-    console.error("Floors array is empty or not an array.");
+    showDebugger && console.error("Floors array is empty or not an array.");
     return false;
   }
 
@@ -160,10 +161,11 @@ export const validateFloors = (floors: Floor[]) => {
       !Array.isArray(floor.rooms) ||
       floor.rooms.length === 0
     ) {
-      console.error(
-        "Rooms array is empty or not an array in Floor",
-        floor.name
-      );
+      showDebugger &&
+        console.error(
+          "Rooms array is empty or not an array in Floor",
+          floor.name
+        );
       isValid = false;
     }
 
@@ -174,11 +176,12 @@ export const validateFloors = (floors: Floor[]) => {
       );
 
       if (missingRoomFields.length > 0) {
-        console.error(
-          "Missing required room fields in Room",
-          room.name,
-          missingRoomFields
-        );
+        showDebugger &&
+          console.error(
+            "Missing required room fields in Room",
+            room.name,
+            missingRoomFields
+          );
         isValid = false;
       }
 
@@ -187,10 +190,11 @@ export const validateFloors = (floors: Floor[]) => {
         !Array.isArray(room.windows) ||
         room.windows.length === 0
       ) {
-        console.error(
-          "The 'windows' array is empty or not an array in Room",
-          room.name
-        );
+        showDebugger &&
+          console.error(
+            "The 'windows' array is empty or not an array in Room",
+            room.name
+          );
         isValid = false;
       }
 
@@ -202,11 +206,12 @@ export const validateFloors = (floors: Floor[]) => {
         );
 
         if (missingWindowFields.length > 0) {
-          console.error(
-            "Missing required window fields in Room",
-            room.name,
-            missingWindowFields
-          );
+          showDebugger &&
+            console.error(
+              "Missing required window fields in Room",
+              room.name,
+              missingWindowFields
+            );
           isValid = false;
         }
       }
@@ -241,7 +246,8 @@ const validateGarden = (garden: Garden) => {
     !Array.isArray(garden.plants) ||
     garden.plants.length === 0
   ) {
-    console.error("Missing required fields in the garden object.");
+    showDebugger &&
+      console.error("Missing required fields in the garden object.");
     return false;
   }
   return true;

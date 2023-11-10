@@ -2,14 +2,14 @@ import { ChangeEvent, useContext, useState } from "react";
 // Context
 import QuestionaireContext from "../../../context/questionaireContext.tsx";
 // Component
-import InputField from "../../ui/inputField";
-import FloorSpecifics from "./floorSpecifics";
+import InputField from "../../ui/inputField.tsx";
+import FloorSpecifics from "./floorSpecifics.tsx";
 // Helpers
 import { addFloorsWithRooms, addRoomsToFloor } from "../../../utils/helpers.ts";
 // Types
 import { Floor, HouseDetailsData } from "../../../utils/types";
 // Styles
-import "./floors.scss";
+import "./index.scss";
 
 const Floors = () => {
   const {
