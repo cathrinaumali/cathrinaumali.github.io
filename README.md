@@ -1,27 +1,36 @@
-# React + TypeScript + Vite
+Certainly! Here's the content formatted for a README file using markdown:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+```markdown
+## Performativ Frontend Engineer Trial Project
 
-Currently, two official plugins are available:
+**Estimated Effort:** 10-20 hours
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Given the following high-level description of functionality, this project involves designing and building a UI prototype for a new user journey within an existing application. The goal is to capture data necessary for building a house successfully:
 
-## Expanding the ESLint configuration
+1. **What type of foundation?**
+   - Options: brick, slab, reinforced concrete
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+2. **What size?**
 
-- Configure the top-level `parserOptions` property like this:
+3. **How many floors?**
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+4. **Room Specification:**
+   - For each floor, the questionnaire should include:
+     - Size of the room in square meters
+     - Type of room (e.g., bedroom, lounge, diner, kitchen, bathroom, office)
+     - Floor type: wood/carpet
+     - Number of windows in the room
+     - Details for each window:
+       - Selection from predefined window types or the ability to add a new type dynamically
+       - Window type properties: Style (Bay/Flat/Full Height), Glass Type (tempered, triple glazed, double glazed)
+     - Each room type may have specific properties (e.g., office has desk/chair, kitchen has white goods list)
+
+**Requirements:**
+- Use functional React components
+- Utilize Storybook or create a full app with routing as a container
+- Component library usage is optional
+
+The prototype can use dummy backend data to showcase the user journey for house construction. Ensure the design and wireframes encapsulate a smooth UX/UI experience.
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+This markdown format would display the content as a properly formatted README file on GitHub, using headings, bullet points, and emphasis where necessary.
