@@ -2,7 +2,7 @@ import React, { HTMLInputTypeAttribute } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
 import { TextFieldVariants } from "@mui/material/TextField";
-import { makeStyles } from "@mui/styles";
+import { makeStyles } from "@mui/material/styles";
 
 const useStyles = makeStyles({
   hideSpinner: {
@@ -40,7 +40,6 @@ const InputField = ({
   onChange,
 }: InputFieldProps) => {
   const classes = useStyles();
-
   return (
     <div>
       {!showPlaceholderLabel && label && (
