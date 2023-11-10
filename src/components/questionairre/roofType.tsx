@@ -1,8 +1,11 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 // Context
 import QuestionaireContext from "../../context/questionaireContext";
 // Components
 import CustomSelect from "../ui/customSelect";
+// Types
+import { SelectChangeEvent } from "@mui/material";
+import { SelectOptionProps, HouseDetailsData } from "../../utils/types";
 
 const RoofType = () => {
   const { answerData, setAnswerData } = useContext(QuestionaireContext);
@@ -10,10 +13,13 @@ const RoofType = () => {
 
   const handleChange = (event: SelectChangeEvent) => {
     setSelectedRoof(event.target.value as string);
-    setAnswerData((prev) => ({ ...prev, roofType: event.target.value }));
+    setAnswerData((prev: HouseDetailsData) => ({
+      ...prev,
+      roofType: event.target.value,
+    }));
   };
 
-  const roofTypes = [
+  const roofTypes: SelectOptionProps[] = [
     { value: "straw", label: "Straw" },
     { value: "thatched", label: "Thatched" },
     { value: "tiled", label: "Tiled" },

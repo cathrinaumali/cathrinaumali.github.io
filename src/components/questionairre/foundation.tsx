@@ -1,8 +1,11 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 // Context
 import QuestionaireContext from "../../context/questionaireContext.tsx";
 // Component
 import CustomSelect from "../ui/customSelect";
+// Types
+import { SelectChangeEvent } from "@mui/material";
+import { HouseDetailsData } from "../../utils/types";
 // Constants
 import { foundationOptions } from "../../utils/constants.ts";
 
@@ -16,7 +19,10 @@ const Foundation = () => {
 
   const handleChange = (event: SelectChangeEvent) => {
     setFoundation(event.target.value as string);
-    setAnswerData((prev) => ({ ...prev, foundation: event.target.value }));
+    setAnswerData((prev: HouseDetailsData) => ({
+      ...prev,
+      foundation: event.target.value,
+    }));
   };
 
   return (

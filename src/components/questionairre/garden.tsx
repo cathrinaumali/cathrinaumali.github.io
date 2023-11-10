@@ -1,33 +1,36 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 // Context
 import QuestionaireContext from "../../context/questionaireContext.tsx";
 // Components
 import MultipleSelectCheckmarks from "../ui/MultipleSelectCheckmarks";
 import CustomSelect from "../ui/customSelect";
+// Types
+import { SelectChangeEvent } from "@mui/material";
+import { HouseDetailsData } from "../../utils/types";
 // Constants
 import { gardenTypes } from "../../utils/constants.ts";
 import listOfPlants from "../../utils/plants.json";
 // Styles
 import "./garden.scss";
 
-const plantOptions = listOfPlants.data?.map((plant) => plant.common_name);
-
 const Garden = () => {
   const { answerData, setAnswerData } = useContext(QuestionaireContext);
   const [selectedGarden, setSelectedGarden] = useState(
-    answerData?.garden?.type || null
+    answerData?.garden?.type || undefined
   );
+
+  const plantOptions = listOfPlants.data?.map((plant) => plant.common_name);
 
   const handleChange = (event: SelectChangeEvent) => {
     setSelectedGarden(event.target.value as string);
-    setAnswerData((prev) => ({
+    setAnswerData((prev: HouseDetailsData) => ({
       ...prev,
       garden: { ...prev.garden, type: event.target.value },
     }));
   };
 
-  const hadlePlantChange = (values) => {
-    setAnswerData((prev) => ({
+  const hadlePlantChange = (values: string[]) => {
+    setAnswerData((prev: HouseDetailsData) => ({
       ...prev,
       garden: {
         ...prev.garden,

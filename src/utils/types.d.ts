@@ -1,15 +1,16 @@
 export interface Window {
-  name: string | null;
-  type: string | null;
-  customType: string | null;
-  style: string | null;
-  glassType: string | null;
+  id: number;
+  name: string | undefined;
+  type: string | undefined;
+  style: string | undefined;
+  glassType: string | undefined;
+  selectedRadio: SELECTED_RADIO;
 }
 
 export interface Room {
   id: number;
   name: string;
-  size: number | null;
+  size: number | undefined;
   floorType: string | null;
   roomType: string | null;
   windows: Window[];
@@ -18,18 +19,17 @@ export interface Room {
 export interface Floor {
   id: number;
   name: string;
-  count: number | null;
   rooms: Room[];
 }
 
 export interface Garden {
   type: string | null;
-  plants: string[] | null;
+  plants: string[];
 }
 
 export interface HouseDetailsData {
-  foundation: string | null;
-  size: string | null;
+  foundation: string | undefined;
+  size: string | undefined;
   floors: Floor[];
   roofType: string | null;
   garden: Garden;
@@ -46,13 +46,20 @@ export type Step = {
   prevStateIsDisabled: boolean;
 };
 
+export interface SelectOptionProps {
+  value: string;
+  label: string;
+}
+
+export type SELECTED_RADIO = "add-new" | "select";
+
 interface QuestionaireContextType {
   steps: Step[];
   nextStep: () => void;
   prevStep: () => void;
   currentStep: number;
   answerData: HouseDetailsData;
-  setAnswerData: React.Dispatch<React.SetStateAction<unknown>>;
+  setAnswerData: React.Dispatch<React.SetStateAction<HouseDetailsData>>;
   handleReset: () => void;
   submitForm: () => void;
 }

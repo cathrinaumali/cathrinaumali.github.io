@@ -22,7 +22,7 @@ interface MultipleSelectCheckmarks {
   className?: string;
   options: string[];
   value: string[];
-  onChange: (values: string) => void;
+  onChange: (values: string[]) => void;
 }
 
 export default function MultipleSelectCheckmarks({

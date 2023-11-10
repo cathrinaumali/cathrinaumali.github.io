@@ -41,9 +41,10 @@ export const addRoomsToFloor = (
   const createRoom = (id: number) => ({
     id,
     name: `Room ${id}`,
-    size: null,
+    size: undefined,
     floorType: null,
     windows: [],
+    roomType: null,
   });
 
   const targetFloor = floorArray[floorId - 1];
@@ -70,7 +71,7 @@ export const addRoomsToFloor = (
 export const updateRoomProperties = (
   floors: Floor[],
   roomId: number,
-  updates: Room
+  updates: Partial<Room>
 ) => {
   const updatedFloors = floors.map((floor) => {
     const updatedRooms = floor.rooms.map((room) => {
@@ -101,9 +102,8 @@ export const addWindowsToRoom = (
       id,
       name: `Window ${id}`,
       type: null,
-      customType: null,
-      style: null,
-      glassType: null,
+      style: undefined,
+      glassType: undefined,
       selectedRadio: "add-new",
     });
     // Create an array of new windows
@@ -122,7 +122,7 @@ export const updateWindowProperties = (
   floors: Floor[],
   roomId: number,
   windowId: number,
-  updates: Window
+  updates: Partial<Window>
 ) => {
   const updatedFloors = JSON.parse(JSON.stringify(floors));
   const roomToUpdate = updatedFloors
@@ -169,7 +169,8 @@ export const validateFloors = (floors: Floor[]) => {
 
     for (const room of floor.rooms) {
       const missingRoomFields = requiredRoomFields.filter(
-        (field) => !room[field] || room[field] === ""
+        (field) =>
+          !room[field as keyof Room] || room[field as keyof Room] === ""
       );
 
       if (missingRoomFields.length > 0) {
@@ -195,7 +196,9 @@ export const validateFloors = (floors: Floor[]) => {
 
       for (const window of room.windows) {
         const missingWindowFields = requiredWindowFields.filter(
-          (field) => !window[field] || window[field] === ""
+          (field) =>
+            !window[field as keyof Window] ||
+            window[field as keyof Window] === ""
         );
 
         if (missingWindowFields.length > 0) {
@@ -213,23 +216,22 @@ export const validateFloors = (floors: Floor[]) => {
   return isValid;
 };
 
-export const hasValues = (obj: Step): boolean => {
+export const hasValues = (
+  obj: string | [] | object | null | undefined
+): boolean => {
   if (obj === undefined || obj === null) {
     return false;
   }
-
   if (typeof obj === "string") {
     return obj?.trim() !== "";
   }
   if (Array.isArray(obj)) {
     return obj?.length > 0 ? obj.every((item) => hasValues(item)) : false;
   }
-
   if (typeof obj === "object") {
     return Object.values(obj).every((value) => hasValues(value));
   }
-
-  return false; // Default to false for other cases
+  return false;
 };
 
 const validateGarden = (garden: Garden) => {
@@ -242,7 +244,6 @@ const validateGarden = (garden: Garden) => {
     console.error("Missing required fields in the garden object.");
     return false;
   }
-
   return true;
 };
 
@@ -250,14 +251,12 @@ export const updateformSteps = (steps: Step[], answers: HouseDetailsData) => {
   return steps?.map((value: Step) => {
     let completed = false;
     if (value.page === "floors") {
-      completed = validateFloors(answers?.[value.page]);
+      completed = validateFloors(answers[value.page]);
     } else if (value.page === "garden") {
-      completed = validateGarden(answers?.[value.page]);
+      completed = validateGarden(answers[value.page]);
     } else {
-      completed = hasValues(answers?.[value.page]);
+      completed = hasValues(answers[value.page]);
     }
-    value.nextStepIsDisabled = !completed;
-
-    return { ...value, completed };
+    return { ...value, completed, nextStepIsDisabled: !completed };
   });
 };

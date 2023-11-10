@@ -11,6 +11,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ResultComponent from "./result";
+// Types
+import { Step } from "../../utils/types";
 // Styles
 import "./questionairre.scss";
 
@@ -59,7 +61,7 @@ export default function Questionairre() {
               sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 6 } }}
             >
               <div className="questionaire">
-                {steps.map((step) => (
+                {steps.map((step: Step) => (
                   <div
                     key={step.id}
                     style={step.id !== currentStep ? { display: "none" } : {}}

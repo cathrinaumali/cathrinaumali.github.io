@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 // Context
 import QuestionaireContext from "../../../context/questionaireContext.tsx";
 // Component
@@ -10,12 +10,14 @@ import {
   updateRoomProperties,
   addWindowsToRoom,
 } from "../../../utils/helpers.ts";
+// Types
+import { Room, HouseDetailsData } from "../../../utils/types";
 // Constants
 import { roomTypes, floorTypes } from "../../../utils/constants.ts";
 // Styles
 import "./roomDetails.scss";
 
-const RoomDetails = ({ data }) => {
+const RoomDetails = ({ data }: { data: Room }) => {
   const {
     answerData: { floors },
     setAnswerData,
@@ -25,13 +27,10 @@ const RoomDetails = ({ data }) => {
   const [floorType, setFloorType] = useState(data?.floorType || "");
   const [windowCount, setWindowCount] = useState(data?.windows?.length);
 
-  const handleChange = (event) => {
-    const newData = updateRoomProperties(floors, data.id, {
-      [event.target.name]: event.target.value,
-    });
-    setAnswerData((prev) => ({ ...prev, floors: newData }));
+  const handleChange = (name: string, value: string) => {
+    const newData = updateRoomProperties(floors, data.id, { [name]: value });
+    setAnswerData((prev: HouseDetailsData) => ({ ...prev, floors: newData }));
   };
-
   return (
     <div className="room-details">
       <h3>{data.name}</h3>
@@ -41,7 +40,9 @@ const RoomDetails = ({ data }) => {
           value={data?.size}
           showPlaceholderLabel
           name="size"
-          onChange={handleChange}
+          onChange={(event) =>
+            handleChange(event.target.name, event.target.value)
+          }
         />
 
         <CustomSelect
@@ -49,7 +50,7 @@ const RoomDetails = ({ data }) => {
           name="roomType"
           value={roomType}
           onChange={(event) => {
-            handleChange(event);
+            handleChange(event.target.name, event.target.value as string);
             setRoomType(event.target.value as string);
           }}
           options={roomTypes}
@@ -60,7 +61,7 @@ const RoomDetails = ({ data }) => {
           name="floorType"
           value={floorType}
           onChange={(event) => {
-            handleChange(event);
+            handleChange(event.target.name, event.target.value as string);
             setFloorType(event.target.value as string);
           }}
           options={floorTypes}
@@ -72,9 +73,13 @@ const RoomDetails = ({ data }) => {
           showPlaceholderLabel
           name="windows"
           onChange={(e) => {
-            const newData = addWindowsToRoom(floors, data.id, e.target.value);
-            setAnswerData((prev) => ({ ...prev, floors: newData }));
-            setWindowCount(e.target.value);
+            const count = Number(e.target.value);
+            const newData = addWindowsToRoom(floors, data.id, count);
+            setAnswerData((prev: HouseDetailsData) => ({
+              ...prev,
+              floors: newData,
+            }));
+            setWindowCount(count);
           }}
         />
       </div>

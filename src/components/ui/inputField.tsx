@@ -8,7 +8,10 @@ interface InputFieldProps {
   name?: string;
   label?: string | number | React.ReactNode;
   value?: string | number;
-  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  // onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChange?:
+    | React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+    | undefined;
   disabled?: boolean;
   variant?: TextFieldVariants;
   showPlaceholderLabel?: boolean;

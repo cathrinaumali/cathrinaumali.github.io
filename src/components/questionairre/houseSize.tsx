@@ -1,8 +1,10 @@
-import React, { useContext } from "react";
+import { ChangeEvent, useContext } from "react";
 // Context
 import QuestionaireContext from "../../context/questionaireContext";
 // Component
 import InputField from "../ui/inputField";
+// Types
+import { HouseDetailsData } from "../../utils/types";
 // Styles
 import "./houseSize.scss";
 
@@ -20,8 +22,8 @@ const HouseSize = () => {
           label="Size in Sqm?"
           value={size}
           showPlaceholderLabel
-          onChange={(event: SelectChangeEvent) => {
-            setAnswerData((prev) => ({
+          onChange={(event: ChangeEvent<HTMLInputElement>) => {
+            setAnswerData((prev: HouseDetailsData) => ({
               ...prev,
               size: event.target.value,
             }));

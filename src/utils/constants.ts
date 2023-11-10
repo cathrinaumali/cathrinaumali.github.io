@@ -1,8 +1,8 @@
 import { HouseDetailsData } from "./types";
 
 export const houseDetailsData: HouseDetailsData = {
-  foundation: null,
-  size: null,
+  foundation: undefined,
+  size: undefined,
   floors: [],
   roofType: null,
   garden: {

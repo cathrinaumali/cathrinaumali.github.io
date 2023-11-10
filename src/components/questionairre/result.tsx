@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Typography,
   Card,
@@ -11,9 +10,12 @@ import {
 // Styles
 import "./result.scss";
 // Types
-import { HouseDetailsData } from "../../utils/types";
+import { HouseDetailsData, Window } from "../../utils/types";
 
-type ResultProps = HouseDetailsData;
+type ResultProps = {
+  data: HouseDetailsData;
+  handleReset: () => void;
+};
 
 const ResultComponent = ({ data, handleReset }: ResultProps) => {
   const { foundation, size, floors, roofType, garden } = data;
@@ -68,15 +70,20 @@ const ResultComponent = ({ data, handleReset }: ResultProps) => {
                             Room: {room.name}
                           </Typography>
                           <List dense>
-                            {room.windows.map((window) => (
-                              <ListItem key={window.id}>
-                                <ListItemText
-                                  primary={`Window: ${window.name}`}
-                                  secondary={`Type: ${window.type}, Style: ${window.style}, Glass Type: ${window.glassType}`}
-                                  style={{ color: "#555", marginLeft: "20px" }}
-                                />
-                              </ListItem>
-                            ))}
+                            {room.windows.map(
+                              (window: Window, index: number) => (
+                                <ListItem key={`${window.name}-${index}`}>
+                                  <ListItemText
+                                    primary={`Window: ${window.name}`}
+                                    secondary={`Type: ${window.type}, Style: ${window.style}, Glass Type: ${window.glassType}`}
+                                    style={{
+                                      color: "#555",
+                                      marginLeft: "20px",
+                                    }}
+                                  />
+                                </ListItem>
+                              )
+                            )}
                           </List>
                         </div>
                       ))}
@@ -94,7 +101,7 @@ const ResultComponent = ({ data, handleReset }: ResultProps) => {
             <ListItem>
               <ListItemText
                 primary={`Garden Type: ${garden.type}`}
-                secondary={`Plants: ${garden.plants.join(", ")}`}
+                secondary={`Plants: ${garden.plants?.join(", ")}`}
                 style={{ color: "#333" }}
               />
             </ListItem>

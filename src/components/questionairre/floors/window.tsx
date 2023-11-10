@@ -1,6 +1,5 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import FormControl from "@mui/material/FormControl";
-import { SelectChangeEvent } from "@mui/material/Select";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -18,50 +17,69 @@ import {
 } from "../../../utils/constants.ts";
 // Helpers
 import { updateWindowProperties } from "../../../utils/helpers.ts";
+// Types
+import { SelectChangeEvent } from "@mui/material/Select";
+import { Window, SELECTED_RADIO, HouseDetailsData } from "../../../utils/types";
 // Styles
 import "./window.scss";
 
-const RADIO_ONE: string = "add-new";
-const RADIO_TWO: string = "select";
-type SELECTED_RADIO = "add-new" | "select";
+const RADIO_ONE: SELECTED_RADIO = "add-new";
+const RADIO_TWO: SELECTED_RADIO = "select";
 
-const Window = ({ windowData, roomId }) => {
+interface WindowProps {
+  windowData: Window;
+  roomId: number;
+}
+
+const WindowComponent = ({ windowData, roomId }: WindowProps) => {
   const {
     answerData: { floors },
     setAnswerData,
   } = useContext(QuestionaireContext);
 
-  const [windowType, setWindowType] = useState<string | null>(
-    windowData?.type || null
+  const [windowType, setWindowType] = useState<string | undefined>(
+    windowData?.type || undefined
   );
   const [selectedRadio, setSelectedRadio] = useState<SELECTED_RADIO>(
     windowData.selectedRadio || RADIO_ONE
   );
-  const [windowStyle, setWindowStyle] = useState(windowData.style);
-  const [glassType, setGlassType] = useState(windowData.glassType);
+  const [windowStyle, setWindowStyle] = useState<string | undefined>(
+    windowData.style || undefined
+  );
+  const [glassType, setGlassType] = useState<string | undefined>(
+    windowData.glassType
+  );
 
-  const updateWindowData = (updates) => {
+  const updateWindowData = (updates: Partial<Window>) => {
     const newData = updateWindowProperties(
       floors,
       roomId,
       windowData.id,
       updates
     );
-    setAnswerData((prev) => ({ ...prev, floors: newData }));
+    setAnswerData((prev: HouseDetailsData) => ({ ...prev, floors: newData }));
   };
 
-  const onWindowTypeChange = (event: SelectChangeEvent) => {
-    setWindowType(event.target.value as string);
-    updateWindowData({ type: event.target.value });
+  // const onWindowTypeInputChange = (
+  //   event: SelectChangeEvent | ChangeEvent<HTMLInputElement>
+  // ) => {
+  // const selectedValue = "target" in event ? event.target.value : "";
+  //   setWindowType(event.target.value as string);
+  //   updateWindowData({ type: event.target.value });
+  // };
+
+  const onWindowTypeInputChange = (selectedValue: string) => {
+    setWindowType(selectedValue);
+    updateWindowData({ type: selectedValue });
   };
 
-  const onCheckboxSelect = (e) => {
-    setSelectedRadio(e.target.value);
-    updateWindowData({ selectedRadio: e.target.value, type: null });
-    setWindowType(null);
+  const onCheckboxSelect = (selectedRadio: SELECTED_RADIO) => {
+    setSelectedRadio(selectedRadio);
+    updateWindowData({ selectedRadio, type: undefined });
+    setWindowType(undefined);
   };
 
-  const onSelectChange = (event) => {
+  const onSelectChange = (event: SelectChangeEvent) => {
     const updates = { [event.target.name]: event.target.value };
     updateWindowData(updates);
   };
@@ -85,7 +103,7 @@ const Window = ({ windowData, roomId }) => {
                 value={RADIO_ONE}
                 control={<Radio />}
                 label="Add new"
-                onChange={onCheckboxSelect}
+                onChange={() => onCheckboxSelect(RADIO_ONE)}
               />
               {selectedRadio === RADIO_ONE && (
                 <InputField
@@ -93,7 +111,8 @@ const Window = ({ windowData, roomId }) => {
                   disabled={selectedRadio !== RADIO_ONE}
                   variant={selectedRadio !== RADIO_ONE ? "filled" : "outlined"}
                   value={windowType}
-                  onChange={onWindowTypeChange}
+                  // onChange={onWindowTypeInputChange}
+                  onChange={(e) => onWindowTypeInputChange(e.target.value)}
                 />
               )}
 
@@ -101,7 +120,7 @@ const Window = ({ windowData, roomId }) => {
                 value={RADIO_TWO}
                 control={<Radio />}
                 label="Select from the list"
-                onChange={onCheckboxSelect}
+                onChange={() => onCheckboxSelect(RADIO_TWO)}
               />
 
               {selectedRadio === RADIO_TWO && (
@@ -111,7 +130,7 @@ const Window = ({ windowData, roomId }) => {
                   disabled={selectedRadio !== RADIO_TWO}
                   variant={selectedRadio !== RADIO_TWO ? "filled" : "outlined"}
                   options={windowTypes}
-                  onChange={onWindowTypeChange}
+                  onChange={(e) => onWindowTypeInputChange(e.target.value)}
                 />
               )}
             </RadioGroup>
@@ -142,4 +161,4 @@ const Window = ({ windowData, roomId }) => {
   );
 };
 
-export default Window;
+export default WindowComponent;

@@ -1,31 +1,30 @@
-import React from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-
-interface Option {
-  value: string;
-  label: string;
-}
+// Types
+import { SelectChangeEvent } from "@mui/material";
+import { SelectOptionProps } from "../../utils/types";
 
 interface CustomSelectProps {
   label?: string;
   name?: string;
   value?: string;
-  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  options: Option;
+  onChange: (event: SelectChangeEvent) => void;
+  options: SelectOptionProps[];
   disabled?: boolean;
   variant?: "filled" | "standard" | "outlined" | undefined;
+  placeholder?: string;
 }
 const CustomSelect = ({
   label,
   name,
   value = "",
-  onChange,
   options,
   disabled,
   variant,
+  placeholder,
+  onChange,
 }: CustomSelectProps) => {
   return (
     <div>
@@ -37,6 +36,7 @@ const CustomSelect = ({
           value={value}
           variant={variant}
           disabled={disabled}
+          placeholder={placeholder}
           onChange={onChange}
         >
           {options.map((option) => (
