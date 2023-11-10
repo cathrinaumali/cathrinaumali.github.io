@@ -12,7 +12,6 @@ export const addFloorsWithRooms = (numFloors: number) => {
   const createFloor = (id: number) => ({
     id,
     name: `Floor ${id}`,
-    // count: null,
     rooms: [],
   });
 
@@ -265,4 +264,10 @@ export const updateformSteps = (steps: Step[], answers: HouseDetailsData) => {
     }
     return { ...value, completed, nextStepIsDisabled: !completed };
   });
+};
+
+export const getIsAllCompleted = () => {
+  const storedAnswerData = localStorage.getItem("answerData");
+  const allCompleted = localStorage.getItem("allAnswersCompleted");
+  return storedAnswerData && allCompleted;
 };

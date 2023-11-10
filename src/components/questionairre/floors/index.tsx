@@ -16,13 +16,14 @@ const Floors = () => {
     answerData: { floors: floorsArray },
     setAnswerData,
   } = useContext(QuestionaireContext);
-  const [floorCount, setFloorCount] = useState(floorsArray?.length);
+  const floors = floorsArray?.length > 0 ? floorsArray?.length : undefined;
+  const [floorCount, setFloorCount] = useState<number | undefined>(floors);
 
   const handleFloorCountChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newCount = Number(event.target.value);
     const floors = addFloorsWithRooms(newCount);
     setAnswerData((prev: HouseDetailsData) => ({ ...prev, floors }));
-    setFloorCount(newCount);
+    setFloorCount(newCount > 0 ? newCount : undefined);
   };
 
   return (
@@ -30,6 +31,7 @@ const Floors = () => {
       <InputField
         label="How many floors you'd prefer?"
         value={floorCount}
+        type="number"
         onChange={handleFloorCountChange}
         id="floor-count"
       />
@@ -42,6 +44,7 @@ const Floors = () => {
                 <InputField
                   label={`No. of rooms in ${floor.name}`}
                   value={floor?.rooms?.length || ""}
+                  type="number"
                   onChange={(e) => {
                     const updatedData = addRoomsToFloor(
                       floorsArray,
@@ -60,7 +63,6 @@ const Floors = () => {
           })}
         </div>
       )}
-      <hr />
       <FloorSpecifics />
     </div>
   );

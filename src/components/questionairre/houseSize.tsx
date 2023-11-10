@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext } from "react";
+import { ChangeEvent, useState, useContext } from "react";
 // Context
 import QuestionaireContext from "../../context/questionaireContext";
 // Component
@@ -13,7 +13,7 @@ const HouseSize = () => {
     setAnswerData,
     answerData: { size },
   } = useContext(QuestionaireContext);
-
+  const [houseSize, setHouseSize] = useState<string | undefined>(size);
   return (
     <div className="house-size">
       <label>
@@ -22,9 +22,11 @@ const HouseSize = () => {
       <div className="house-size__fields">
         <InputField
           label="Size in sqm?"
-          value={size}
+          value={houseSize}
+          type="number"
           showPlaceholderLabel
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
+            setHouseSize(event.target.value);
             setAnswerData((prev: HouseDetailsData) => ({
               ...prev,
               size: event.target.value,

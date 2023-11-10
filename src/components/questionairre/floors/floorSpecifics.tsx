@@ -15,6 +15,7 @@ const FloorSpecifics = () => {
 
   return (
     <div className="floor-specifics">
+      <hr />
       {floors?.length > 0 &&
         floors.map((floor: Floor) => {
           if (floor.rooms?.length > 0) {

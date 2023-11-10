@@ -23,9 +23,11 @@ const RoomDetails = ({ data }: { data: Room }) => {
     setAnswerData,
   } = useContext(QuestionaireContext);
 
-  const [roomType, setRoomType] = useState(data?.roomType || "");
-  const [floorType, setFloorType] = useState(data?.floorType || "");
-  const [windowCount, setWindowCount] = useState(data?.windows?.length);
+  const [roomType, setRoomType] = useState<string>(data?.roomType || "");
+  const [floorType, setFloorType] = useState<string>(data?.floorType || "");
+  const [windowCount, setWindowCount] = useState<number | undefined>(
+    data?.windows?.length
+  );
 
   const handleChange = (name: string, value: string) => {
     const newData = updateRoomProperties(floors, data.id, { [name]: value });
@@ -36,10 +38,11 @@ const RoomDetails = ({ data }: { data: Room }) => {
       <h3>{data.name}</h3>
       <div className="room-details__details">
         <InputField
+          name="size"
+          type="number"
           label="Size of room in sqm"
           value={data?.size}
           showPlaceholderLabel
-          name="size"
           onChange={(event) =>
             handleChange(event.target.name, event.target.value)
           }
@@ -72,6 +75,7 @@ const RoomDetails = ({ data }: { data: Room }) => {
           value={windowCount}
           showPlaceholderLabel
           name="windows"
+          type="number"
           onChange={(e) => {
             const count = Number(e.target.value);
             const newData = addWindowsToRoom(floors, data.id, count);
@@ -79,7 +83,7 @@ const RoomDetails = ({ data }: { data: Room }) => {
               ...prev,
               floors: newData,
             }));
-            setWindowCount(count);
+            setWindowCount(count > 0 ? count : undefined);
           }}
         />
       </div>
