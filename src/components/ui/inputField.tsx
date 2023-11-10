@@ -2,19 +2,8 @@ import React, { HTMLInputTypeAttribute } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
 import { TextFieldVariants } from "@mui/material/TextField";
-import { makeStyles } from "@mui/material/styles";
+import "./inputField.scss";
 
-const useStyles = makeStyles({
-  hideSpinner: {
-    "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
-      "-webkit-appearance": "none",
-      margin: 0,
-    },
-    "& input[type=number]": {
-      "-moz-appearance": "textfield",
-    },
-  },
-});
 interface InputFieldProps {
   id?: string;
   name?: string;
@@ -39,7 +28,6 @@ const InputField = ({
   showPlaceholderLabel = false,
   onChange,
 }: InputFieldProps) => {
-  const classes = useStyles();
   return (
     <div>
       {!showPlaceholderLabel && label && (
@@ -53,7 +41,6 @@ const InputField = ({
         label={showPlaceholderLabel && label ? label : null}
         variant={variant}
         value={value}
-        className={classes.hideSpinner}
         onChange={(event) => {
           const regex = /^[0-9]*$/;
           if (type === "number" && !regex.test(event.target.value)) {
