@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import QuestionaireContext from "./questionaireContext.tsx";
 // Components
 import Foundation from "../components/questionairre/foundation.tsx";
@@ -69,6 +69,7 @@ const getFirstIncompleteStepId = (steps: Step[]): number => {
 };
 
 const QuestionaireProvider = ({ children }: { children: React.ReactNode }) => {
+  const initialLoad = useRef(true);
   const defaultAnswerData = getDataFromStorage();
   const updatedSteps = updateformSteps(defaultSteps, defaultAnswerData);
 
@@ -110,14 +111,17 @@ const QuestionaireProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Set the first unanswered step to start off where user left off
   useLayoutEffect(() => {
-    const allCompleted = formSteps?.every((step) => step.completed);
-    if (allCompleted) {
-      setCurrentStep(formSteps?.length);
-    } else {
-      const defaultAnswerData = getDataFromStorage();
-      const updatedSteps = updateformSteps(defaultSteps, defaultAnswerData);
-      const newStep = getFirstIncompleteStepId(updatedSteps);
-      setCurrentStep(newStep);
+    if (initialLoad.current) {
+      initialLoad.current = false; // Set to false after initial load
+      const allCompleted = formSteps?.every((step) => step.completed);
+      if (allCompleted) {
+        setCurrentStep(formSteps?.length);
+      } else {
+        const defaultAnswerData = getDataFromStorage();
+        const updatedSteps = updateformSteps(defaultSteps, defaultAnswerData);
+        const newStep = getFirstIncompleteStepId(updatedSteps);
+        setCurrentStep(newStep);
+      }
     }
   }, [formSteps]);
 

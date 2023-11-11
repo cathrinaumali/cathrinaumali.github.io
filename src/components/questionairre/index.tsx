@@ -14,12 +14,6 @@ import { Step } from "../../utils/types";
 // Styles
 import "./index.scss";
 
-// const getIsAllCompleted = () => {
-//   const storedAnswerData = localStorage.getItem("answerData");
-//   const allCompleted = localStorage.getItem("allAnswersCompleted");
-//   return storedAnswerData && allCompleted;
-// };
-
 export default function Questionairre() {
   const {
     steps,

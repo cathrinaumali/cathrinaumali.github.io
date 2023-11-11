@@ -16,14 +16,14 @@ const FloorSpecifics = () => {
   return (
     <div className="floor-specifics">
       {floors?.length > 0 &&
-        floors.map((floor: Floor) => {
+        floors.map((floor: Floor, index: number) => {
           if (floor.rooms?.length > 0) {
             return (
               <div key={floor.id} className="floor-specifics__item">
                 <hr />
-                <h1>{floor.name}</h1>
-                {floor.rooms?.map((room: Room) => (
-                  <RoomDetails key={room.id} data={room} />
+                <h1>Floor {index + 1}</h1>
+                {floor.rooms?.map((room: Room, index: number) => (
+                  <RoomDetails key={room.id} data={room} index={index} />
                 ))}
               </div>
             );

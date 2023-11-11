@@ -17,7 +17,7 @@ import { roomTypes, floorTypes } from "../../../utils/constants.ts";
 // Styles
 import "./roomDetails.scss";
 
-const RoomDetails = ({ data }: { data: Room }) => {
+const RoomDetails = ({ data, index }: { data: Room; index: number }) => {
   const {
     answerData: { floors },
     setAnswerData,
@@ -35,7 +35,7 @@ const RoomDetails = ({ data }: { data: Room }) => {
   };
   return (
     <div className="room-details">
-      <h3>{data.name}</h3>
+      <h3>Room {index + 1}</h3>
       <div className="room-details__details">
         <InputField
           name="size"
