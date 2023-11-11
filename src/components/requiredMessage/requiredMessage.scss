@@ -1,0 +1,15 @@
+.required-error-message {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  margin: 4px 0;
+  gap: 2px;
+  font-weight: 600;
+  text-transform: capitalize;
+  color: red;
+
+  svg {
+    height: 15px;
+    width: 15px;
+  }
+}

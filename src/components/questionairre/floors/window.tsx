@@ -9,6 +9,7 @@ import QuestionaireContext from "../../../context/questionaireContext.tsx";
 // Component
 import InputField from "../../ui/inputField";
 import CustomSelect from "../../ui/customSelect";
+import RequiredMessage from "../../requiredMessage/requiredMessage";
 // Constants
 import {
   windowTypes,
@@ -60,14 +61,6 @@ const WindowComponent = ({ windowData, roomId }: WindowProps) => {
     setAnswerData((prev: HouseDetailsData) => ({ ...prev, floors: newData }));
   };
 
-  // const onWindowTypeInputChange = (
-  //   event: SelectChangeEvent | ChangeEvent<HTMLInputElement>
-  // ) => {
-  // const selectedValue = "target" in event ? event.target.value : "";
-  //   setWindowType(event.target.value as string);
-  //   updateWindowData({ type: event.target.value });
-  // };
-
   const onWindowTypeInputChange = (selectedValue: string) => {
     setWindowType(selectedValue);
     updateWindowData({ type: selectedValue });
@@ -106,14 +99,18 @@ const WindowComponent = ({ windowData, roomId }: WindowProps) => {
                 onChange={() => onCheckboxSelect(RADIO_ONE)}
               />
               {selectedRadio === RADIO_ONE && (
-                <InputField
-                  name="windowType"
-                  disabled={selectedRadio !== RADIO_ONE}
-                  variant={selectedRadio !== RADIO_ONE ? "filled" : "outlined"}
-                  value={windowType}
-                  // onChange={onWindowTypeInputChange}
-                  onChange={(e) => onWindowTypeInputChange(e.target.value)}
-                />
+                <div>
+                  <InputField
+                    name="windowType"
+                    disabled={selectedRadio !== RADIO_ONE}
+                    variant={
+                      selectedRadio !== RADIO_ONE ? "filled" : "outlined"
+                    }
+                    value={windowType}
+                    onChange={(e) => onWindowTypeInputChange(e.target.value)}
+                  />
+                  <RequiredMessage fieldName="Window Type" value={windowType} />
+                </div>
               )}
 
               <FormControlLabel
@@ -124,38 +121,51 @@ const WindowComponent = ({ windowData, roomId }: WindowProps) => {
               />
 
               {selectedRadio === RADIO_TWO && (
-                <CustomSelect
-                  name="windowType"
-                  value={windowType}
-                  disabled={selectedRadio !== RADIO_TWO}
-                  variant={selectedRadio !== RADIO_TWO ? "filled" : "outlined"}
-                  options={windowTypes}
-                  onChange={(e) => onWindowTypeInputChange(e.target.value)}
-                />
+                <div>
+                  <CustomSelect
+                    name="windowType"
+                    value={windowType}
+                    disabled={selectedRadio !== RADIO_TWO}
+                    variant={
+                      selectedRadio !== RADIO_TWO ? "filled" : "outlined"
+                    }
+                    options={windowTypes}
+                    onChange={(e) => onWindowTypeInputChange(e.target.value)}
+                  />
+                  <RequiredMessage fieldName="Window Type" value={windowType} />
+                </div>
               )}
             </RadioGroup>
           </FormControl>
         </div>
-        <CustomSelect
-          label="Style"
-          name="style"
-          value={windowStyle}
-          options={windowStyles}
-          onChange={(e) => {
-            onSelectChange(e);
-            setWindowStyle(e.target.value);
-          }}
-        />
-        <CustomSelect
-          label="Glass Type"
-          name="glassType"
-          value={glassType}
-          options={glassTypes}
-          onChange={(e) => {
-            onSelectChange(e);
-            setGlassType(e.target.value);
-          }}
-        />
+
+        <div>
+          <CustomSelect
+            label="Style"
+            name="style"
+            value={windowStyle}
+            options={windowStyles}
+            onChange={(e) => {
+              onSelectChange(e);
+              setWindowStyle(e.target.value);
+            }}
+          />
+          <RequiredMessage fieldName="Window style" value={windowStyle} />
+        </div>
+
+        <div>
+          <CustomSelect
+            label="Glass Type"
+            name="glassType"
+            value={glassType}
+            options={glassTypes}
+            onChange={(e) => {
+              onSelectChange(e);
+              setGlassType(e.target.value);
+            }}
+          />
+          <RequiredMessage fieldName="Glass Type" value={glassType} />
+        </div>
       </div>
     </div>
   );

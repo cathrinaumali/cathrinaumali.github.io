@@ -4,6 +4,7 @@ import QuestionaireContext from "../../../context/questionaireContext.tsx";
 // Component
 import InputField from "../../ui/inputField.tsx";
 import FloorSpecifics from "./floorSpecifics.tsx";
+import RequiredMessage from "../../requiredMessage/requiredMessage";
 // Helpers
 import { addFloorsWithRooms, addRoomsToFloor } from "../../../utils/helpers.ts";
 // Types
@@ -35,6 +36,7 @@ const Floors = () => {
         onChange={handleFloorCountChange}
         id="floor-count"
       />
+      <RequiredMessage fieldName="No. of floors" value={floorCount} />
       {floorsArray?.length > 0 && (
         <div className="floors-container__rooms">
           <h4>How many rooms you'd like on each floor</h4>
@@ -57,6 +59,10 @@ const Floors = () => {
                     }));
                   }}
                   id="floor-count"
+                />
+                <RequiredMessage
+                  fieldName="No. of rooms"
+                  value={floor?.rooms?.length}
                 />
               </div>
             );

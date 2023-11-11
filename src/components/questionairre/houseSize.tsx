@@ -3,6 +3,7 @@ import { ChangeEvent, useState, useContext } from "react";
 import QuestionaireContext from "../../context/questionaireContext";
 // Component
 import InputField from "../ui/inputField";
+import RequiredMessage from "../requiredMessage/requiredMessage";
 // Types
 import { HouseDetailsData } from "../../utils/types";
 // Styles
@@ -34,6 +35,7 @@ const HouseSize = () => {
           }}
           id="floor-count"
         />
+        <RequiredMessage fieldName="House size" value={houseSize} />
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import QuestionaireContext from "../../../context/questionaireContext.tsx";
 import InputField from "../../ui/inputField";
 import CustomSelect from "../../ui/customSelect";
 import Window from "./window";
+import RequiredMessage from "../../requiredMessage/requiredMessage";
 // Helpers
 import {
   updateRoomProperties,
@@ -37,55 +38,66 @@ const RoomDetails = ({ data, index }: { data: Room; index: number }) => {
     <div className="room-details">
       <h3>Room {index + 1}</h3>
       <div className="room-details__details">
-        <InputField
-          name="size"
-          type="number"
-          label="Size of room in sqm"
-          value={data?.size}
-          showPlaceholderLabel
-          onChange={(event) =>
-            handleChange(event.target.name, event.target.value)
-          }
-        />
+        <div>
+          <InputField
+            name="size"
+            type="number"
+            label="Size of room in sqm"
+            value={data?.size}
+            showPlaceholderLabel
+            onChange={(event) =>
+              handleChange(event.target.name, event.target.value)
+            }
+          />
+          <RequiredMessage fieldName="Size of room" value={data?.size} />
+        </div>
+        <div>
+          <CustomSelect
+            label="Type of room"
+            name="roomType"
+            value={roomType}
+            onChange={(event) => {
+              handleChange(event.target.name, event.target.value as string);
+              setRoomType(event.target.value as string);
+            }}
+            options={roomTypes}
+          />
+          <RequiredMessage fieldName="Type of room" value={roomType} />
+        </div>
 
-        <CustomSelect
-          label="Type of room"
-          name="roomType"
-          value={roomType}
-          onChange={(event) => {
-            handleChange(event.target.name, event.target.value as string);
-            setRoomType(event.target.value as string);
-          }}
-          options={roomTypes}
-        />
+        <div>
+          <CustomSelect
+            label="Floor type"
+            name="floorType"
+            value={floorType}
+            onChange={(event) => {
+              handleChange(event.target.name, event.target.value as string);
+              setFloorType(event.target.value as string);
+            }}
+            options={floorTypes}
+          />
+          <RequiredMessage fieldName="Floor type" value={floorType} />
+        </div>
 
-        <CustomSelect
-          label="Floor type"
-          name="floorType"
-          value={floorType}
-          onChange={(event) => {
-            handleChange(event.target.name, event.target.value as string);
-            setFloorType(event.target.value as string);
-          }}
-          options={floorTypes}
-        />
-
-        <InputField
-          label="No. of windows"
-          value={windowCount}
-          showPlaceholderLabel
-          name="windows"
-          type="number"
-          onChange={(e) => {
-            const count = Number(e.target.value);
-            const newData = addWindowsToRoom(floors, data.id, count);
-            setAnswerData((prev: HouseDetailsData) => ({
-              ...prev,
-              floors: newData,
-            }));
-            setWindowCount(count > 0 ? count : undefined);
-          }}
-        />
+        <div>
+          <InputField
+            label="No. of windows"
+            value={windowCount}
+            showPlaceholderLabel
+            name="windows"
+            type="number"
+            onChange={(e) => {
+              const count = Number(e.target.value);
+              const newData = addWindowsToRoom(floors, data.id, count);
+              setAnswerData((prev: HouseDetailsData) => ({
+                ...prev,
+                floors: newData,
+              }));
+              setWindowCount(count > 0 ? count : undefined);
+            }}
+          />
+          <RequiredMessage fieldName="No. of windows" value={windowCount} />
+        </div>
       </div>
       {data.windows?.length > 0 &&
         data.windows.map((window) => (

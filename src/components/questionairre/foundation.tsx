@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import QuestionaireContext from "../../context/questionaireContext.tsx";
 // Component
 import CustomSelect from "../ui/customSelect";
+import RequiredMessage from "../requiredMessage/requiredMessage";
 // Types
 import { SelectChangeEvent } from "@mui/material";
 import { HouseDetailsData } from "../../utils/types";
@@ -26,14 +27,18 @@ const Foundation = () => {
   };
 
   return (
-    <CustomSelect
-      label="What type of foundation would you like for your house?"
-      placeholder="Select Foundation"
-      name="foundation"
-      value={foundation}
-      onChange={handleChange}
-      options={foundationOptions}
-    />
+    <>
+      <CustomSelect
+        label="What type of foundation would you like for your house?"
+        placeholder="Select Foundation"
+        name="foundation"
+        value={foundation}
+        onChange={handleChange}
+        handleClose={() => console.log("closed")}
+        options={foundationOptions}
+      />
+      <RequiredMessage fieldName="foundation" value={foundation} />
+    </>
   );
 };
 

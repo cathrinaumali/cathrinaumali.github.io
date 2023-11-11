@@ -4,6 +4,7 @@ import QuestionaireContext from "../../context/questionaireContext.tsx";
 // Components
 import MultipleSelectCheckmarks from "../ui/MultipleSelectCheckmarks";
 import CustomSelect from "../ui/customSelect";
+import RequiredMessage from "../requiredMessage/requiredMessage";
 // Types
 import { SelectChangeEvent } from "@mui/material";
 import { HouseDetailsData } from "../../utils/types";
@@ -41,20 +42,30 @@ const Garden = () => {
 
   return (
     <div className="garden">
-      <CustomSelect
-        label="Select Garden"
-        name="garden"
-        value={selectedGarden}
-        onChange={handleChange}
-        options={gardenTypes}
-      />
-      {selectedGarden && (
-        <MultipleSelectCheckmarks
-          className="plant-multiple-form-control"
-          options={plantOptions}
-          value={answerData?.garden?.plants}
-          onChange={hadlePlantChange}
+      <div>
+        <CustomSelect
+          label="Select Garden"
+          name="garden"
+          value={selectedGarden}
+          onChange={handleChange}
+          options={gardenTypes}
         />
+        <RequiredMessage fieldName="Type of Garden" value={selectedGarden} />
+      </div>
+
+      {selectedGarden && (
+        <div>
+          <MultipleSelectCheckmarks
+            className="plant-multiple-form-control"
+            options={plantOptions}
+            value={answerData?.garden?.plants}
+            onChange={hadlePlantChange}
+          />
+          <RequiredMessage
+            fieldName="Plant types"
+            value={answerData?.garden?.plants?.length}
+          />
+        </div>
       )}
     </div>
   );

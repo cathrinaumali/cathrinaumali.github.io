@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import QuestionaireContext from "../../context/questionaireContext";
 // Components
 import CustomSelect from "../ui/customSelect";
+import RequiredMessage from "../requiredMessage/requiredMessage";
 // Types
 import { SelectChangeEvent } from "@mui/material";
 import { SelectOptionProps, HouseDetailsData } from "../../utils/types";
@@ -27,13 +28,16 @@ const RoofType = () => {
   ];
 
   return (
-    <CustomSelect
-      label="Select Roof type"
-      name="roofType"
-      value={selectedRoof}
-      onChange={handleChange}
-      options={roofTypes}
-    />
+    <>
+      <CustomSelect
+        label="Select Roof type"
+        name="roofType"
+        value={selectedRoof}
+        onChange={handleChange}
+        options={roofTypes}
+      />
+      <RequiredMessage fieldName="Roof Type" value={selectedRoof} />
+    </>
   );
 };
 

@@ -11,12 +11,14 @@ interface CustomSelectProps {
   label?: string | React.ReactNode;
   name?: string;
   value?: string;
-  onChange: (event: SelectChangeEvent) => void;
   options: SelectOptionProps[];
   disabled?: boolean;
   variant?: "filled" | "standard" | "outlined" | undefined;
   placeholder?: string;
+  handleClose?: () => void;
+  onChange: (event: SelectChangeEvent) => void;
 }
+
 const CustomSelect = ({
   label,
   name,
@@ -26,6 +28,7 @@ const CustomSelect = ({
   variant,
   placeholder,
   onChange,
+  handleClose,
 }: CustomSelectProps) => {
   return (
     <div>
@@ -39,6 +42,7 @@ const CustomSelect = ({
           disabled={disabled}
           placeholder={placeholder}
           onChange={onChange}
+          onClose={handleClose}
         >
           {options.map((option) => (
             <MenuItem key={option.value} value={option.value}>
