@@ -18,7 +18,15 @@ import { roomTypes, floorTypes } from "../../../utils/constants.ts";
 // Styles
 import "./roomDetails.scss";
 
-const RoomDetails = ({ data, index }: { data: Room; index: number }) => {
+const RoomDetails = ({
+  floorId,
+  data,
+  index,
+}: {
+  floorId: number;
+  data: Room;
+  index: number;
+}) => {
   const {
     answerData: { floors },
     setAnswerData,
@@ -89,7 +97,7 @@ const RoomDetails = ({ data, index }: { data: Room; index: number }) => {
             inputProps={{ min: 0, max: 10 }}
             onChange={(e) => {
               const count = Number(e.target.value);
-              const newData = addWindowsToRoom(floors, data.id, count);
+              const newData = addWindowsToRoom(floors, floorId, data.id, count);
               setAnswerData((prev: HouseDetailsData) => ({
                 ...prev,
                 floors: newData,
@@ -102,7 +110,11 @@ const RoomDetails = ({ data, index }: { data: Room; index: number }) => {
       </div>
       {data.windows?.length > 0 &&
         data.windows.map((window) => (
-          <Window key={data.id} roomId={data.id} windowData={window} />
+          <Window
+            key={`${data.id}-${Math.random()}`}
+            roomId={data.id}
+            windowData={window}
+          />
         ))}
     </div>
   );

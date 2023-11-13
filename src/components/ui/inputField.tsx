@@ -1,4 +1,4 @@
-import React, { HTMLInputTypeAttribute } from "react";
+import React, { HTMLInputTypeAttribute, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
 import { TextFieldVariants } from "@mui/material/TextField";
@@ -38,15 +38,35 @@ const InputField = ({
       <TextField
         id={id}
         name={name}
-        type={type}
+        type={"text"}
         disabled={disabled}
         label={showPlaceholderLabel && label ? label : null}
         variant={variant}
         value={value}
         onChange={(event) => {
           const regex = /^[0-9]*$/;
-          if (type === "number" && !regex.test(event.target.value)) {
-            return;
+          if (type === "number") {
+            if (!regex.test(event.target.value)) {
+              return;
+            }
+            if (inputProps) {
+              const maxValue = inputProps.max
+                ? parseFloat(inputProps.max.toString())
+                : Number.MAX_VALUE;
+
+              const enteredValue = event.target.value;
+
+              if (
+                enteredValue !== "" &&
+                (isNaN(parseFloat(enteredValue)) ||
+                  parseFloat(enteredValue) > maxValue)
+              ) {
+                // Input is either not a number or higher than the allowed max
+                // Prevent updating the state
+                return;
+              }
+            }
+            onChange?.(event);
           } else {
             onChange?.(event);
           }
@@ -58,9 +78,13 @@ const InputField = ({
         }}
         inputProps={{
           ...inputProps,
-          onWheel: (event) => {
-            event.preventDefault();
-          },
+          id: "your-number-input-id",
+          ...(type === "number"
+            ? {
+                inputMode: "numeric",
+                pattern: "[0-9]*", // Allows only numbers
+              }
+            : {}),
         }}
       />
     </div>

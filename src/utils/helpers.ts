@@ -85,37 +85,79 @@ export const updateRoomProperties = (
 
 export const addWindowsToRoom = (
   floors: Floor[],
+  floorId: number,
   roomId: number,
   numberOfWindows: number
 ) => {
   const updatedFloors = JSON.parse(JSON.stringify(floors));
 
-  // Find the floor and room with the specified roomId
-  const roomToUpdate = updatedFloors
-    .flatMap((floor: Floor) => floor.rooms)
-    .find((room: Room) => room.id === roomId);
+  // Find the floor with the specified floorId
+  const floorToUpdate = updatedFloors.find(
+    (floor: Floor) => floor.id === floorId
+  );
 
-  if (roomToUpdate) {
-    // Create a function to generate a window object
-    const createWindow = (id: number) => ({
-      id,
-      name: `Window ${id}`,
-      type: null,
-      style: undefined,
-      glassType: undefined,
-      selectedRadio: "add-new",
-    });
-    // Create an array of new windows
-    const newWindows = Array.from(
-      { length: numberOfWindows },
-      (_, windowIndex) =>
-        createWindow(roomToUpdate.windows.length + windowIndex + 1)
+  if (floorToUpdate) {
+    // Find the room with the specified roomId on the identified floor
+    const roomToUpdate = floorToUpdate.rooms.find(
+      (room: Room) => room.id === roomId
     );
-    roomToUpdate.windows = newWindows;
+
+    if (roomToUpdate) {
+      // Create a function to generate a window object
+      const createWindow = (id: number) => ({
+        id,
+        name: `Window ${id}`,
+        type: null,
+        style: undefined,
+        glassType: undefined,
+        selectedRadio: "add-new",
+      });
+      // Create an array of new windows
+      const newWindows = Array.from(
+        { length: numberOfWindows },
+        (_, windowIndex) =>
+          createWindow(roomToUpdate.windows.length + windowIndex + 1)
+      );
+      roomToUpdate.windows = newWindows;
+    }
   }
 
   return updatedFloors;
 };
+
+// export const addWindowsToRoom = (
+//   floors: Floor[],
+//   roomId: number,
+//   numberOfWindows: number
+// ) => {
+//   const updatedFloors = JSON.parse(JSON.stringify(floors));
+
+//   // Find the floor and room with the specified roomId
+//   const roomToUpdate = updatedFloors
+//     .flatMap((floor: Floor) => floor.rooms)
+//     .find((room: Room) => room.id === roomId);
+
+//   if (roomToUpdate) {
+//     // Create a function to generate a window object
+//     const createWindow = (id: number) => ({
+//       id,
+//       name: `Window ${id}`,
+//       type: null,
+//       style: undefined,
+//       glassType: undefined,
+//       selectedRadio: "add-new",
+//     });
+//     // Create an array of new windows
+//     const newWindows = Array.from(
+//       { length: numberOfWindows },
+//       (_, windowIndex) =>
+//         createWindow(roomToUpdate.windows.length + windowIndex + 1)
+//     );
+//     roomToUpdate.windows = newWindows;
+//   }
+
+//   return updatedFloors;
+// };
 
 export const updateWindowProperties = (
   floors: Floor[],

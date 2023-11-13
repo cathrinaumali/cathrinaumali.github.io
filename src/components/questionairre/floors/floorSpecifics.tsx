@@ -23,7 +23,12 @@ const FloorSpecifics = () => {
                 <hr />
                 <h1>Floor {index + 1}</h1>
                 {floor.rooms?.map((room: Room, index: number) => (
-                  <RoomDetails key={room.id} data={room} index={index} />
+                  <RoomDetails
+                    key={`${room.id}-${index}`}
+                    floorId={floor.id}
+                    data={room}
+                    index={index}
+                  />
                 ))}
               </div>
             );
