@@ -1,4 +1,8 @@
 .floors-container {
+  .MuiTextField-root {
+    width: 50%;
+  }
+
   &__rooms {
     display: flex;
     flex-direction: column;

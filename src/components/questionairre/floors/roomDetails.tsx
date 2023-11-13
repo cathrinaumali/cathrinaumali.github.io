@@ -86,6 +86,7 @@ const RoomDetails = ({ data, index }: { data: Room; index: number }) => {
             showPlaceholderLabel
             name="windows"
             type="number"
+            inputProps={{ min: 0, max: 10 }}
             onChange={(e) => {
               const count = Number(e.target.value);
               const newData = addWindowsToRoom(floors, data.id, count);

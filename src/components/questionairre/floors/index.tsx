@@ -35,6 +35,7 @@ const Floors = () => {
         type="number"
         onChange={handleFloorCountChange}
         id="floor-count"
+        inputProps={{ min: 0, max: 20 }}
       />
       <RequiredMessage fieldName="No. of floors" value={floorCount} />
       {floorsArray?.length > 0 && (
@@ -47,6 +48,7 @@ const Floors = () => {
                   label={`No. of rooms in ${floor.name}`}
                   value={floor?.rooms?.length || ""}
                   type="number"
+                  inputProps={{ min: 0, max: 20 }}
                   onChange={(e) => {
                     const updatedData = addRoomsToFloor(
                       floorsArray,

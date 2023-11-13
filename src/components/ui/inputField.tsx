@@ -16,6 +16,7 @@ interface InputFieldProps {
   disabled?: boolean;
   variant?: TextFieldVariants;
   showPlaceholderLabel?: boolean;
+  inputProps?: { min: number; max: number };
 }
 const InputField = ({
   id,
@@ -26,6 +27,7 @@ const InputField = ({
   disabled,
   variant = "outlined",
   showPlaceholderLabel = false,
+  inputProps,
   onChange,
 }: InputFieldProps) => {
   return (
@@ -53,6 +55,12 @@ const InputField = ({
           if (event.key === "ArrowUp" || event.key === "ArrowDown") {
             event.preventDefault();
           }
+        }}
+        inputProps={{
+          ...inputProps,
+          onWheel: (event) => {
+            event.preventDefault();
+          },
         }}
       />
     </div>
